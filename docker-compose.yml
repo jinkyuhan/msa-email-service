@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - pg-dump:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=example
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DATABASE=example
+
+  email:
+    image: jinkyuhan/msa-email-service
+    build:
+      context: ./email
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./email:/email-app
+    depends_on:
+      - db
+
+volumes:
+  pg-dump:
