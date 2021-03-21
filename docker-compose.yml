@@ -14,12 +14,17 @@ services:
   email:
     image: jinkyuhan/msa-email-service
     build:
-      context: ./email
+      context: .
       dockerfile: Dockerfile
+      target: development
     ports:
       - 8080:8080
+      - 35729:35729
     volumes:
       - ./email:/email-app
+      - /email-app/build
+      - /email-app/bin
+      - /email-app/.gradle
     depends_on:
       - db
 
