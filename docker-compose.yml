@@ -22,8 +22,6 @@ services:
       - 35729:35729
     volumes:
       - ./email:/email-app
-      - /email-app/build
-      - /email-app/bin
       - /email-app/.gradle
     depends_on:
       - db
