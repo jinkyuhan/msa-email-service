@@ -1,6 +1,7 @@
 
+@startuml
 class MailAccount {
-  String
+  String sf
 
 }
 class Mail {
@@ -11,8 +12,14 @@ class Mail {
   Mail receiver
 }
 
+class MailContent {
 
-  @startuml
-   Mail ->
-    
-  @enduml
+}
+
+class MailService {
+
+}
+
+
+  ' Mail *-- MailContent 
+@enduml
