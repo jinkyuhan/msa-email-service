@@ -1,0 +1,16 @@
+
+class MailAccount {
+
+}
+class Mail {
+  String id
+  String title
+  String content
+
+}
+
+
+  @startuml
+   Mail
+
+  @enduml
