@@ -12,6 +12,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+  umlDoclet
 }
 
 repositories {
@@ -41,6 +42,15 @@ dependencies {
   // PostgreSQL JDBC Driver
   // https://mvnrepository.com/artifact/org.postgresql/postgresql
   implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+
+  umlDoclet "nl.talsmasoftware:umldoclet:2.0.12"
+}
+
+javadoc {
+  source = sourceSets.main.allJava
+  options.docletpath = configurations.umlDoclet.files.asType(List)
+  options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+  options.addStringOption "additionalParamName", "additionalParamValue"
 }
 
 test {

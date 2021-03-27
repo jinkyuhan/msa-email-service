@@ -8,7 +8,7 @@ import lombok.Data;
 public class MailListDto {
   private Mail[] mails;
 
-  MailListDto(Mail[] mails) {
+  public MailListDto(Mail[] mails) {
     this.mails = mails;
   }
 }

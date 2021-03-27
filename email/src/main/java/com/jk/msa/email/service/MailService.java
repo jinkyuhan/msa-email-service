@@ -1,3 +1,9 @@
+
+/**
+ * @author jinkyuhan
+ * @version 1.0.0 21/03/27
+ * @see MailRepository
+ */
 import java.util.List;
 
 import com.jk.msa.email.entity.Mail;
@@ -13,7 +19,7 @@ public class MailService {
   MailRepository mailRepository;
 
   public Mail[] getAllMails() {
-    ist<Mail> mails = mailRepository.findAll();
+    List<Mail> mails = mailRepository.findAll();
     return mails.toArray(new Mail[mails.size()]);
   }
 

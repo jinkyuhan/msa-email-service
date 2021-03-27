@@ -1,25 +1,49 @@
 
 @startuml
-class MailAccount {
-  String sf
+package email.entity {
+  class MailAccount {
+  - String uid
+  - String emailAddress
+  - boolean isAuthenticated
+  }
+  class Mail {
+    - String id
+    - MailContent content
+    - MailAccount sender
+    - MailAccount receiver
+    + Mail()
+    + String getContent()
+    + MailAccount getSender()
+    + MailAccount getRecevier()
+  }
+
+  class MailContent {
+    - String title
+    - String body
+  }
+}
+
+package email.controller {
+  class AppController {
+
+  }
+  class MailController {
+
+  }
+}
+
+
+package email.repository {
 
 }
-class Mail {
-  String id
-  String title
-  String content
-  Mail sender
-  Mail receiver
+
+package email.service {
+  class MailService {
+
+  }
 }
 
-class MailContent {
-
-}
-
-class MailService {
-
-}
-
-
-  ' Mail *-- MailContent 
+' Relation
+Mail o-- MailContent
+Mail o-- MailAccount
 @enduml
