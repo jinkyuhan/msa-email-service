@@ -1,16 +1,18 @@
 
 class MailAccount {
+  String
 
 }
 class Mail {
   String id
   String title
   String content
-
+  Mail sender
+  Mail receiver
 }
 
 
   @startuml
-   Mail
-
+   Mail ->
+    
   @enduml

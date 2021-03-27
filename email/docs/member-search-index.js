@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.jk.msa.email.entity","c":"MailAccount","l":"MailAccount()","url":"%3Cinit%3E()"}]

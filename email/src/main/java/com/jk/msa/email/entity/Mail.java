@@ -7,38 +7,30 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
-@Table()
+@Table(name = "mail")
 public class Mail {
 
   @Id
   private String id;
 
   @Column
-  private String title;
+  private MailContent content;
 
   @Column
-  private String content;
+  private String senderId;
 
   @Column
-  private String senderEmail;
+  private String receiverId;
 
-  @Column
-  private String receiverEmail;
-
-  public Mail(String senderId, String receiverId, String title) {
+  public Mail(String senderId, String receiverId, MailContent content) {
     this.id = UUID.randomUUID().toString();
-    this.senderEmail = senderId;
-    this.receiverEmail = receiverId;
-    this.title = title;
-    this.content = "";
+    this.senderId = senderId;
+    this.receiverId = receiverId;
+    this.content = content;
   }
 
 }
