@@ -50,7 +50,17 @@ javadoc {
   source = sourceSets.main.allJava
   options.docletpath = configurations.umlDoclet.files.asType(List)
   options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
-  options.addStringOption "additionalParamName", "additionalParamValue"
+  // options.addStringOption "--uml-image-directory", "docs"
+}
+
+springBoot { 
+  mainClassName = 'com.jk.msa.email.EmailApplication'
+}
+
+bootRun {
+  if ( project.hasProperty('jvmArgs')) {
+    jvmArgs project.jvmArgs.split('\\s+')
+  }
 }
 
 test {

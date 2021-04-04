@@ -1,11 +1,11 @@
 package com.jk.msa.email.entity;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 
-import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Data
+@NoArgsConstructor
+@Embeddable
 public class MailContent {
 
   private String title;
@@ -15,5 +15,4 @@ public class MailContent {
     this.title = title;
     this.body = body;
   }
-
 }

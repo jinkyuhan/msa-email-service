@@ -1,15 +1,21 @@
 package com.jk.msa.email.entity;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
-@Data
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Entity
 @Table(name = "mail")
 public class Mail {
@@ -17,20 +23,38 @@ public class Mail {
   @Id
   private String id;
 
+  @Embedded
   @Column
   private MailContent content;
 
-  @Column
-  private String senderId;
+  @ManyToOne()
+  @JoinColumn(name = "sender_id")
+  private Account sender;
 
-  @Column
-  private String receiverId;
+  @ManyToOne()
+  @JoinColumn(name = "receiver_id")
+  private Account receiver;
+  
+  @Column(name = "tag_1")
+  private String tag1;
 
-  public Mail(String senderId, String receiverId, MailContent content) {
+  @Column(name= "tag_2")
+  private String tag2;
+
+  @CreatedDate
+  @Column(name = "created_time")
+  private LocalDateTime createTime;
+  
+
+  public Mail(Account sender, Account receiver, MailContent content) {
     this.id = UUID.randomUUID().toString();
-    this.senderId = senderId;
-    this.receiverId = receiverId;
+    this.sender = sender;
+    this.receiver = receiver;
     this.content = content;
+  }
+
+  public boolean send() {
+    return true;
   }
 
 }
