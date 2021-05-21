@@ -1,8 +1,6 @@
-package com.jk.msa.email.controller;
+package com.jk.msa.email.mail;
 
-import com.jk.msa.email.dto.MailListDto;
-import com.jk.msa.email.entity.Mail;
-import com.jk.msa.email.service.MailService;
+import com.jk.msa.email.mail.dto.MailListDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

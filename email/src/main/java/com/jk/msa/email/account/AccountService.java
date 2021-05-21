@@ -1,9 +1,6 @@
-package com.jk.msa.email.service;
+package com.jk.msa.email.account;
 
 import java.util.List;
-
-import com.jk.msa.email.entity.Account;
-import com.jk.msa.email.repository.AccountRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

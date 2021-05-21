@@ -1,10 +1,8 @@
-package com.jk.msa.email.controller;
+package com.jk.msa.email.account;
 
 import javax.websocket.server.PathParam;
 
-import com.jk.msa.email.entity.Account;
-import com.jk.msa.email.entity.Mail;
-import com.jk.msa.email.service.AccountService;
+import com.jk.msa.email.mail.Mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,14 +24,14 @@ public class UidController {
   }
 
   @GetMapping(value = "/{uid}/account")
-  public Account[] getAccountsOfUid(@PathParam(value="uid") String uid) {
+  public Account[] getAccountsOfUid(@PathParam(value = "uid") String uid) {
     Account[] accounts = accountService.getAccountsByUid(uid);
     return accounts;
   }
 
   @PostMapping(value = "/{uid}/account")
   public boolean registerNewAccount() {
-    
+
     return true;
   }
 

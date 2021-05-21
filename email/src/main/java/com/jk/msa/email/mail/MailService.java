@@ -1,10 +1,8 @@
-package com.jk.msa.email.service;
+package com.jk.msa.email.mail;
 
 import java.util.List;
 
-import com.jk.msa.email.dto.SendMailDto;
-import com.jk.msa.email.entity.Mail;
-import com.jk.msa.email.repository.MailRepository;
+import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

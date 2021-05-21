@@ -1,4 +1,4 @@
-package com.jk.msa.email.entity;
+package com.jk.msa.email.mail;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.jk.msa.email.account.Account;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -34,17 +36,16 @@ public class Mail {
   @ManyToOne()
   @JoinColumn(name = "receiver_id")
   private Account receiver;
-  
+
   @Column(name = "tag_1")
   private String tag1;
 
-  @Column(name= "tag_2")
+  @Column(name = "tag_2")
   private String tag2;
 
   @CreatedDate
   @Column(name = "created_time")
   private LocalDateTime createTime;
-  
 
   public Mail(Account sender, Account receiver, MailContent content) {
     this.id = UUID.randomUUID().toString();

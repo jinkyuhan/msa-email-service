@@ -1,6 +1,6 @@
-package com.jk.msa.email.dto;
+package com.jk.msa.email.mail.dto;
 
-import com.jk.msa.email.entity.Mail;
+import com.jk.msa.email.mail.Mail;
 
 import lombok.Data;
 

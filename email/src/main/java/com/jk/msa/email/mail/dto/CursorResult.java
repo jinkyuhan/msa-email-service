@@ -1,4 +1,4 @@
-package com.jk.msa.email.dto;
+package com.jk.msa.email.mail.dto;
 
 import lombok.AllArgsConstructor;
 

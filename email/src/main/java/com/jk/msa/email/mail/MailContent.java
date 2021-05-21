@@ -1,4 +1,4 @@
-package com.jk.msa.email.entity;
+package com.jk.msa.email.mail;
 
 import javax.persistence.Embeddable;
 
