@@ -8,6 +8,6 @@ public class AppController {
 
   @GetMapping
   public String checkHealth() {
-    return "I'm alive!";
+    return "I'm alive";
   }
 }
