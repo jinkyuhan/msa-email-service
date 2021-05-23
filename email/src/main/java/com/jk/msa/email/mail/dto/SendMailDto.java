@@ -4,5 +4,5 @@ import com.jk.msa.email.mail.MailContent;
 
 public class SendMailDto {
   private MailContent content;
-  private String[] receiverUids;
+  private String[] receiverUserIds;
 }

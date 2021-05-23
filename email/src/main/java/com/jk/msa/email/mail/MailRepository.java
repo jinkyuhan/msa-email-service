@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MailRepository extends JpaRepository<Mail, String> {
 
-  // public List<Mail> findAllByOrderByCreateTime();
 }

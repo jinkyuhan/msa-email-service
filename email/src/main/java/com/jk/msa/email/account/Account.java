@@ -10,11 +10,12 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 @Entity
@@ -24,11 +25,11 @@ public class Account {
   @Id
   private String id;
 
-  @Column(name = "mail_address", unique = true)
+  @Column(name = "mail_address", unique = true, nullable: true)
   private String mailAddress;
 
-  @Column(name = "uid")
-  private String uid;
+  @Column(name = "user_id", nullable = true)
+  private String userId;
 
   @Column(name = "is_authenticated", nullable = false)
   private boolean isAuthenticated;
@@ -41,8 +42,8 @@ public class Account {
   @Column(name = "update_time")
   private LocalDateTime updatedTime;
 
-  public Account(String uid, String mailAddress) {
-    this.uid = uid;
+  public Account(String userId, String mailAddress) {
+    this.userId = userId;
     this.mailAddress = mailAddress;
     this.isAuthenticated = false;
   }
