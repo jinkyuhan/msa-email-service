@@ -1,5 +1,6 @@
 package com.jk.msa.email.account;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,8 @@ public class AccountController {
   AccountRepository accountRepository;
 
   @GetMapping
-  public List<Account> getAllAccountsOfUser(String userId) {
-    List<Account> accountsOfUser = accountRepository.findAllByUid(userId);
+  public List<Account> getAccountsOfUser(String userId) {
+    List<Account> accountsOfUser = accountRepository.findAllByUserId(userId).orElse(new ArrayList<Account>());
     return accountsOfUser;
   }
-
 }
