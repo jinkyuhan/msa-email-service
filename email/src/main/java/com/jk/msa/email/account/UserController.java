@@ -14,8 +14,8 @@ public class UserController {
 
   @GetMapping
   public List<String> getUserId(String userId) {
-    List<String> userIds = accountRepository.findAll()
-    return 
+    List<String> userIds = accountRepository.findAllUserId();
+    return userIds;
   }
 
 }
