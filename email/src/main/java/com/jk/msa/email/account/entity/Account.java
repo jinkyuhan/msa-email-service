@@ -13,13 +13,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Setter
 @Entity
 @Table(name = "account")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Account {
 
   @Id
@@ -45,6 +43,5 @@ public class Account {
   public Account(String userId, String mailAddress) {
     this.userId = userId;
     this.mailAddress = mailAddress;
-    this.isAuthenticated = false;
   }
 }
