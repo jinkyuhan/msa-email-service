@@ -7,8 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 public class TableNameConfig {
 
   @Value("${table.mail.name}")
-  public final static String mailTable;
+  public static String mailTable;
 
   @Value("${table.account.name}")
-  public final static String accountTable;
+  public static String accountTable;
 }

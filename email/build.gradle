@@ -43,7 +43,12 @@ dependencies {
   // https://mvnrepository.com/artifact/org.postgresql/postgresql
   implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
+  // Uml generation for javadoc
   umlDoclet "nl.talsmasoftware:umldoclet:2.0.12"
+
+  // springfox-swagger2, springfox-swagger-ui
+  compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.2.2'
+  compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.2.2'
 }
 
 javadoc {
