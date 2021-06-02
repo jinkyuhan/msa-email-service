@@ -23,7 +23,7 @@ public class Account {
   @Id
   private String id;
 
-  @Column(name = "mail_address", unique = true, nullable: true)
+  @Column(name = "mail_address", unique = true, nullable = true)
   private String mailAddress;
 
   @Column(name = "user_id", nullable = true)
