@@ -19,13 +19,8 @@ public class AccountController {
   AccountRepository accountRepository;
 
   @GetMapping
-<<<<<<< HEAD
-  public List<Account> getAllAccountsOfUser(String userId) {
-    List<Account> accountsOfUser = accountRepository.findAll();
-=======
   public List<Account> getAccountsOfUser(String userId) {
     List<Account> accountsOfUser = accountRepository.findAllByUserId(userId).orElse(new ArrayList<Account>());
->>>>>>> b6392a8f459b5f1778a26f5f31822f0486a20d27
     return accountsOfUser;
   }
 }
