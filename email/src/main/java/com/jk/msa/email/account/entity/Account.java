@@ -1,4 +1,4 @@
-package com.jk.msa.email.account;
+package com.jk.msa.email.account.entity;
 
 import java.time.LocalDateTime;
 
@@ -25,7 +25,7 @@ public class Account {
   @Id
   private String id;
 
-  @Column(name = "mail_address", unique = true, nullable: true)
+  @Column(name = "mail_address", unique = true, nullable = true)
   private String mailAddress;
 
   @Column(name = "user_id", nullable = true)

@@ -2,11 +2,16 @@ package com.jk.msa.email.account;
 
 import java.util.List;
 
+import com.jk.msa.email.account.entity.Account;
+import com.jk.msa.email.account.repository.AccountRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/account")
 public class AccountController {
 
   @Autowired
@@ -14,8 +19,7 @@ public class AccountController {
 
   @GetMapping
   public List<Account> getAllAccountsOfUser(String userId) {
-    List<Account> accountsOfUser = accountRepository.findAllByUid(userId);
+    List<Account> accountsOfUser = accountRepository.findAll();
     return accountsOfUser;
   }
-
 }

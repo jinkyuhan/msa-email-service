@@ -23,6 +23,7 @@ public class MailService {
   }
 
   public int sendMail(SendMailDto sendMailDto) {
+    // Mail mailToSend = new Mail();
     return 1;
   }
 }

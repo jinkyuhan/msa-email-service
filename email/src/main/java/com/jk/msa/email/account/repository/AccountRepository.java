@@ -1,14 +1,16 @@
-package com.jk.msa.email.account;
+package com.jk.msa.email.account.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import com.jk.msa.email.account.entity.Account;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
 
-  @Query("SELECT user_id FROM  WHERE  ")
-  public List<String> findAllUserId();
+  public <T> List<T> findBy(Class<T> projectionClass);
 
   public List<Account> findAllByUserId(String userId);
 
