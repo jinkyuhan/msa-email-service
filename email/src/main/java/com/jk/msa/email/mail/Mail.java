@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.jk.msa.email.account.Account;
+import com.jk.msa.email.account.entity.Account;
 
 import org.springframework.data.annotation.CreatedDate;
 

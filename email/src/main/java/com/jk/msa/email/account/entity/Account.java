@@ -1,4 +1,4 @@
-package com.jk.msa.email.account;
+package com.jk.msa.email.account.entity;
 
 import java.time.LocalDateTime;
 
