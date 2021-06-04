@@ -3,7 +3,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:dbshema.properties")
+@PropertySource("classpath:table.name.properties")
 public class TableNameConfig {
 
   @Value("${table.mail.name}")
