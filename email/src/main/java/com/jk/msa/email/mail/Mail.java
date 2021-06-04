@@ -59,7 +59,7 @@ public class Mail{
   public MailMessage getMailMessage() {
     // if (this.content.getBody() != null) {
       MailMessage message;
-      message = new SimpleMailMessage()
+      message = new SimpleMailMessage();
       message.setFrom(this.sender.getMailAddress());
       message.setTo(this.receiver.getMailAddress());
       message.setSubject(this.content.getTitle());

@@ -26,8 +26,13 @@ public class MailService {
   }
 
   public int sendMail(SendMailDto sendMailDto) {
-    mailSender.send()
+    Mail newMail = new Mail();
     
+    
+    
+    
+    
+    mailSender.send()
     return 1;
   }
 }
