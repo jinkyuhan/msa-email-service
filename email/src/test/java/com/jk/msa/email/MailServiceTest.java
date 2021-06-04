@@ -1,5 +1,7 @@
 package com.jk.msa.email;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.jk.msa.email.mail.MailContent;
 import com.jk.msa.email.mail.MailService;
 import com.jk.msa.email.mail.dto.SendMailDto;
@@ -18,7 +20,6 @@ public class MailServiceTest {
   public void mailSendingTest() {
     String[] userIdToSendMail = { "user" };
     int result = mailService.sendMail(new SendMailDto(new MailContent("title", "body"), userIdToSendMail));
-
+    assertNotNull(result);
   }
-
 }

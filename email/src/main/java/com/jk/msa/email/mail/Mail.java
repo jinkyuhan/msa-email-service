@@ -14,13 +14,15 @@ import javax.persistence.Table;
 import com.jk.msa.email.account.entity.Account;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.mail.MailMessage;
+import org.springframework.mail.SimpleMailMessage;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "mail")
-public class Mail {
+public class Mail{
 
   @Id
   private String id;
@@ -54,8 +56,15 @@ public class Mail {
     this.content = content;
   }
 
-  public boolean send() {
-    return true;
+  public MailMessage getMailMessage() {
+    // if (this.content.getBody() != null) {
+      MailMessage message;
+      message = new SimpleMailMessage()
+      message.setFrom(this.sender.getMailAddress());
+      message.setTo(this.receiver.getMailAddress());
+      message.setSubject(this.content.getTitle());
+      message.setText(this.content.getBody());
+      return message;
+    // }
   }
-
 }
