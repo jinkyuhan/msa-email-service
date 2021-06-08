@@ -2,6 +2,8 @@ package com.jk.msa.email.mail;
 
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+
 import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,7 @@ public class MailService {
   public int sendMail(SendMailDto sendMailDto) {
     Mail newMail = new Mail();
     
-    
-    
-    
-    
-    mailSender.send()
+    mailSender.send((MimeMessage) newMail.getMailMessage());
     return 1;
   }
 }

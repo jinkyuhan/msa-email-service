@@ -1,10 +1,6 @@
 package com.jk.msa.email;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import com.jk.msa.email.mail.MailContent;
 import com.jk.msa.email.mail.MailService;
-import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +14,9 @@ public class MailServiceTest {
 
   @Test
   public void mailSendingTest() {
-    String[] userIdToSendMail = { "user" };
-    int result = mailService.sendMail(new SendMailDto(new MailContent("title", "body"), userIdToSendMail));
-    assertNotNull(result);
+    // String[] receiverIds = { "user" };
+    // String[] co
+    // int result = mailService.sendMail(new SendMailDto(new MailContent("title", "body"), userIdToSendMail, )fhh;
+    // assertNotNull(result);
   }
 }
