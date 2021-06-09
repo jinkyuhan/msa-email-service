@@ -2,8 +2,7 @@ package com.jk.msa.email.mail;
 
 import java.util.List;
 
-import javax.mail.internet.MimeMessage;
-
+import com.jk.msa.email.account.repository.AccountRepository;
 import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,11 @@ public class MailService {
 
   @Autowired(required = true)
   private MailRepository mailRepository;
-  @Autowired(required = true)
+
+  @Autowired
+  private AccountRepository accountRepository;
+
+  @Autowired
   private JavaMailSender mailSender;
 
   // public CursorResult<Mail> getMails(int cursor, int size, String cursorType) {
@@ -28,9 +31,8 @@ public class MailService {
   }
 
   public int sendMail(SendMailDto sendMailDto) {
-    Mail newMail = new Mail();
-    
-    mailSender.send((MimeMessage) newMail.getMailMessage());
+    // Mail newMail = new Mail();
+    // mailSender.send((MimeMessage) newMail.getMailMessage());
     return 1;
   }
 }

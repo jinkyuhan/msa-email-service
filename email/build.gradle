@@ -57,6 +57,16 @@ dependencies {
   // springfox-swagger2, springfox-swagger-ui
   implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
   implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+
+  
+  // sl4j for logging
+  // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
+  implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.30'
+
+  // logback for logging
+  // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+  implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
 }
 
 javadoc {
