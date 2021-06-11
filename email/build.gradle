@@ -55,8 +55,8 @@ dependencies {
   umlDoclet "nl.talsmasoftware:umldoclet:2.0.12"
 
   // springfox-swagger2, springfox-swagger-ui
-  implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
-  implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+  implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+  implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
   
   // sl4j for logging

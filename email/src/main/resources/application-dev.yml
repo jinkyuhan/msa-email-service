@@ -1,0 +1,53 @@
+server:
+    tomcat:
+        accesslog:
+            enabled: true
+            directory: '/dev'
+            prefix: 'stdout'
+            buffered: false
+            suffix:
+            file-date-format:
+spring:
+    profiles: dev
+    devtools:
+        remote:
+            restart:
+                enabled: true
+            secret: remotesecret
+        restart:
+            enabled: true
+    sql:
+        init:
+            enabled: true
+            encoding: utf-8
+            platform: postgres
+    datasource:
+        driver-class-name: org.h2.Driver
+        password: admin
+        platform: h2
+        url: jdbc:h2:mem:email
+        username: admin
+    h2:
+        console:
+            enabled: true
+    jpa:
+        database: H2
+        database-platform: org.hibernate.dialect.H2Dialect
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                default_schema: public
+        show-sql: true
+    mail:
+        host: smtp.gmail.com
+        password: hjg89558955^
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: gkswlsrb95@gmail.com

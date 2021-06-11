@@ -9,20 +9,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
-@RequestMapping(value = "/mail")
+@RequestMapping(value = "/v1/mail")
 public class MailController {
 
   @Autowired
   MailService mailService;
 
+	@ApiOperation("메일 전송")
   @PostMapping("/send")
   public CommonResponse<Void> sendMailToUsers(SendMailDto dto) {
     int successCount = mailService.sendMail(dto);
 
-    if (dto.getReceiverUserIds().length != successCount) {
-      return new CommonResponse<Void>(ApiResult.SUCCESS);
-    }
+    // if (dto.getReceiverUserIds().length != successCount) {
+    //   return new CommonResponse<Void>(ApiResult.SUCCESS);
+    // }
     return new CommonResponse<Void>(ApiResult.PARTIAL_FAIL);
   }
 }

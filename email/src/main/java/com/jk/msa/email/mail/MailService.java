@@ -1,7 +1,5 @@
 package com.jk.msa.email.mail;
 
-import java.util.List;
-
 import com.jk.msa.email.account.repository.AccountRepository;
 import com.jk.msa.email.mail.dto.SendMailDto;
 
@@ -21,14 +19,8 @@ public class MailService {
   @Autowired
   private JavaMailSender mailSender;
 
-  // public CursorResult<Mail> getMails(int cursor, int size, String cursorType) {
-  // List<Mail> mails = mailRepository.findAll();
-  // return new CursorResult<Mail>(mails.toArray(new Mail[mails.size()]), true);
-  // }
-  public Mail[] getAllMails() {
-    List<Mail> mails = mailRepository.findAll();
-    return mails.toArray(new Mail[mails.size()]);
-  }
+
+	// public void sendAuthenticationMail()
 
   public int sendMail(SendMailDto sendMailDto) {
     // Mail newMail = new Mail();

@@ -29,8 +29,14 @@ public class Account {
   @Column(name = "user_id", nullable = true)
   private String userId;
 
-  @Column(name = "is_authenticated", nullable = false)
-  private boolean isAuthenticated;
+	@Column(name = "authentication_code", nullable = true)
+	private String authenticationCode;
+	
+	@Column(name = "authentication_code_expired_time", nullable = true) 
+	private LocalDateTime authenticationCodeExpiredTime;
+
+  @Column(name = "authenticated_time", nullable = true)
+  private LocalDateTime authenticatedSuccessTime;
 
   @CreatedDate
   @Column(name = "create_time")

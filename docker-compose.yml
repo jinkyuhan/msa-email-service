@@ -5,7 +5,7 @@ services:
     volumes:
       - pg-dump:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 65432:5432
     environment:
       - POSTGRES_USER=jk_email
       - POSTGRES_PASSWORD=jk_email
