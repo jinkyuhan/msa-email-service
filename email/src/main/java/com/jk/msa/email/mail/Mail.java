@@ -3,6 +3,7 @@ package com.jk.msa.email.mail;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import com.jk.msa.email.account.entity.Account;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.mail.MailMessage;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMailMessage;
 
 import lombok.NoArgsConstructor;
 
@@ -57,14 +58,12 @@ public class Mail{
   }
 
   public MailMessage getMailMessage() {
-    // if (this.content.getBody() != null) {
-      MailMessage message;
-      message = new SimpleMailMessage();
-      message.setFrom(this.sender.getMailAddress());
-      message.setTo(this.receiver.getMailAddress());
-      message.setSubject(this.content.getTitle());
-      message.setText(this.content.getBody());
-      return message;
-    // }
+		MimeMessage mime = new MimeMessage();
+		MimeMailMessage mailMessage = new MimeMailMessage();
+		mailMessage.setFrom(this.sender.getMailAddress());
+		mailMessage.setTo(this.receiver.getMailAddress());
+		mailMessage.setSubject(this.content.getTitle());
+		mailMessage.setText(this.content.getBody());
+		return mailMessage;
   }
 }

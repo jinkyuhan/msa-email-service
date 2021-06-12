@@ -14,9 +14,6 @@ public class MailServiceTest {
 
   @Test
   public void mailSendingTest() {
-    // String[] receiverIds = { "user" };
-    // String[] co
-    // int result = mailService.sendMail(new SendMailDto(new MailContent("title", "body"), userIdToSendMail, )fhh;
-    // assertNotNull(result);
+		mailService.sendAuthenticationMail("hjg0911@naver.com");
   }
 }

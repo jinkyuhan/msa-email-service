@@ -43,7 +43,7 @@ public class AccountController {
 	) {
 		return new CommonResponse<IsAuthResultDto>(
 				ApiResult.SUCCESS,
-				accountService.isAuthenticatedAccount(userId, email, Long.parseLong(sinceTimestamp))
+				new IsAuthResultDto(accountService.isAuthenticatedAccount(userId, email, Long.parseLong(sinceTimestamp)))
 		);
 	}
 }

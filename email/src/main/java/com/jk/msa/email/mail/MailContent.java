@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MailContent {
-
   private String title;
   private String body;
 }

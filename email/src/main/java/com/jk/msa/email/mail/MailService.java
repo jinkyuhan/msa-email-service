@@ -1,10 +1,19 @@
 package com.jk.msa.email.mail;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import com.jk.msa.email.account.repository.AccountRepository;
+import com.jk.msa.email.common.ApiResult;
+import com.jk.msa.email.common.CommonException;
+import com.jk.msa.email.config.AdminEmailConfig;
 import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,15 +25,68 @@ public class MailService {
   @Autowired
   private AccountRepository accountRepository;
 
+	@Autowired
+	private AdminEmailConfig adminEmailConfig;
+
   @Autowired
   private JavaMailSender mailSender;
 
-
-	// public void sendAuthenticationMail()
+	public void sendAuthenticationMail(String receiverEmailAddress) {
+		sendSimpleMail(
+			adminEmailConfig.getAuthEmailSender(),
+			receiverEmailAddress,
+			"제목",
+			"본문 코드"
+		);
+	}
 
   public int sendMail(SendMailDto sendMailDto) {
-    // Mail newMail = new Mail();
-    // mailSender.send((MimeMessage) newMail.getMailMessage());
+    Mail newMail = new Mail();
+    mailSender.send((MimeMessage) newMail.getMailMessage());
     return 1;
   }
+
+
+	private void sendSimpleMail(
+		String senderMailAddress,
+		String receiverMailAddress,
+		String title,
+		String body
+	) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom(senderMailAddress);
+		message.setTo(receiverMailAddress);
+		message.setSubject(title);
+		message.setText(body);
+		
+		try {
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private void sendMimeMail(
+		String senderMailAddress,
+		String receiverMailAddress,
+		String title,
+		String body
+	) {
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			@Override
+			public void prepare(MimeMessage mimeMessage) {
+				try {
+					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					helper.setTo(receiverMailAddress);
+					helper.setFrom(senderMailAddress);
+					helper.setSubject(title);
+					helper.setText(body, true); // 2번째 arg, html text 인지 아닌지 
+				} catch (MessagingException e) {
+					throw new CommonException(ApiResult.MESSAGE_SENDING_FAIL);
+				}
+			}
+		};
+		mailSender.send(preparator);
+	}
+
 }

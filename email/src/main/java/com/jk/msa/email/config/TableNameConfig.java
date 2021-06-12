@@ -2,10 +2,8 @@ package com.jk.msa.email.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:table.name.properties")
 public class TableNameConfig {
 
   @Value("${table.mail.name}")

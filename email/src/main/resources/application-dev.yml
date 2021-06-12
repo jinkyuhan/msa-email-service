@@ -20,7 +20,7 @@ spring:
         init:
             enabled: true
             encoding: utf-8
-            platform: postgres
+            platform: h2
     datasource:
         driver-class-name: org.h2.Driver
         password: admin
@@ -40,14 +40,3 @@ spring:
             hibernate:
                 default_schema: public
         show-sql: true
-    mail:
-        host: smtp.gmail.com
-        password: hjg89558955^
-        port: 587
-        properties:
-            mail:
-                smtp:
-                    auth: true
-                    starttls:
-                        enable: true
-        username: gkswlsrb95@gmail.com

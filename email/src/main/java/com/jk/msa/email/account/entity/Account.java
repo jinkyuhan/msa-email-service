@@ -1,6 +1,7 @@
 package com.jk.msa.email.account.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "account")
@@ -29,6 +31,7 @@ public class Account {
   @Column(name = "user_id", nullable = true)
   private String userId;
 
+	@Setter
 	@Column(name = "authentication_code", nullable = true)
 	private String authenticationCode;
 	
@@ -46,8 +49,9 @@ public class Account {
   @Column(name = "update_time")
   private LocalDateTime updatedTime;
 
-  public Account(String userId, String mailAddress) {
-    this.userId = userId;
-    this.mailAddress = mailAddress;
-  }
+	public Account(String userId, String mailAddress) {
+		this.id = UUID.randomUUID().toString();
+		this.userId = userId;
+		this.mailAddress = mailAddress;
+	}
 }
