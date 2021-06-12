@@ -1,5 +1,6 @@
 package com.jk.msa.email;
 
+import com.jk.msa.email.common.exception.ByServerException;
 import com.jk.msa.email.mail.MailService;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,10 @@ public class MailServiceTest {
 
   @Test
   public void mailSendingTest() {
-		mailService.sendAuthenticationMail("hjg0911@naver.com");
+		try {
+			mailService.sendAuthenticationMail("hjg0911@naver.com");
+		} catch (ByServerException exception) {
+			System.
+		}
   }
 }

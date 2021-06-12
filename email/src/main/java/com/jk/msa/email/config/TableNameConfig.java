@@ -1,14 +1,16 @@
 package com.jk.msa.email.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Configuration
+@ConfigurationProperties(prefix = "table")
+@Getter
+@Setter
 public class TableNameConfig {
-
-  @Value("${table.mail.name}")
-  public static String mailTable;
-
-  @Value("${table.account.name}")
-  public static String accountTable;
+  private String mailTable;
+  private String accountTable;
 }

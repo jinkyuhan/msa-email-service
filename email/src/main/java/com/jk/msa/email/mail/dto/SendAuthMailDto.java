@@ -8,8 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SendAuthMailDto {
-	private String title;
-	private String body;
 	private String targetUserId;
 	private String targetEmailAddress;
 }

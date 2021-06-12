@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import com.jk.msa.email.account.entity.Account;
 import com.jk.msa.email.account.repository.AccountRepository;
 import com.jk.msa.email.common.ApiResult;
-import com.jk.msa.email.common.CommonException;
+import com.jk.msa.email.common.exception.RequestFailException;
 import com.jk.msa.email.common.utils.DateUtils;
 import com.jk.msa.email.common.utils.RandomUtils;
 import com.jk.msa.email.config.AuthenticationConfig;
@@ -74,7 +74,7 @@ public class AccountService {
 	public Account findAccountByUserIdAndEmailAddress(String userId, String emailAddress) {
 		return accountRepository
 				.findByUserIdAndMailAddress(userId, emailAddress)
-				.orElseThrow(() -> new CommonException(ApiResult.NOT_EXIST_ACCOUNT));
+				.orElseThrow(() -> new RequestFailException(ApiResult.NOT_EXIST_ACCOUNT));
 	}
 
 	public boolean validateAuthenticationCode(String userId, String emailAddress, String code) {

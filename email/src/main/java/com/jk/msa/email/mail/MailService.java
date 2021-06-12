@@ -4,8 +4,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import com.jk.msa.email.account.repository.AccountRepository;
-import com.jk.msa.email.common.ApiResult;
-import com.jk.msa.email.common.CommonException;
+import com.jk.msa.email.common.exception.ByServerException;
 import com.jk.msa.email.config.AdminEmailConfig;
 import com.jk.msa.email.mail.dto.SendMailDto;
 
@@ -53,16 +52,15 @@ public class MailService {
 		String title,
 		String body
 	) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom(senderMailAddress);
-		message.setTo(receiverMailAddress);
-		message.setSubject(title);
-		message.setText(body);
-		
 		try {
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom(senderMailAddress);
+			message.setTo(receiverMailAddress);
+			message.setSubject(title);
+			message.setText(body);
 			mailSender.send(message);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			throw new ByServerException(e.getMessage());
 		}
 	}
 
@@ -72,21 +70,21 @@ public class MailService {
 		String title,
 		String body
 	) {
-		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-			@Override
-			public void prepare(MimeMessage mimeMessage) {
-				try {
+		try {
+			MimeMessagePreparator preparator = new MimeMessagePreparator() {
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws MessagingException {
 					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 					helper.setTo(receiverMailAddress);
 					helper.setFrom(senderMailAddress);
 					helper.setSubject(title);
 					helper.setText(body, true); // 2번째 arg, html text 인지 아닌지 
-				} catch (MessagingException e) {
-					throw new CommonException(ApiResult.MESSAGE_SENDING_FAIL);
 				}
-			}
-		};
-		mailSender.send(preparator);
+			};
+			mailSender.send(preparator);
+		} catch (Exception e) {
+			throw new ByServerException(e.getMessage());
+		}
 	}
 
 }
