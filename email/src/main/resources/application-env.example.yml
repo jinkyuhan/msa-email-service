@@ -1,0 +1,22 @@
+spring:
+    mail:
+        host: smtp.gmail.com
+        username: ${GMAIL_USERNAME}
+        password: ${GMAIL_PASSWORD}
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+
+service:
+    mail:
+    service:
+        name: example
+        mail:
+          senderAddress: gkswlsrb95@gmail.com
+          expiration-minutes: 30
+          auth-code-length: 6
+    

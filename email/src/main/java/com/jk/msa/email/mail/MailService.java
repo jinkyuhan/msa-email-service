@@ -5,7 +5,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.jk.msa.email.account.repository.AccountRepository;
 import com.jk.msa.email.common.exception.ByServerException;
-import com.jk.msa.email.config.AdminEmailConfig;
+import com.jk.msa.email.config.ServiceConfig;
 import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,14 @@ public class MailService {
   private AccountRepository accountRepository;
 
 	@Autowired
-	private AdminEmailConfig adminEmailConfig;
+	private ServiceConfig serviceConfig;
 
   @Autowired
   private JavaMailSender mailSender;
 
 	public void sendAuthenticationMail(String receiverEmailAddress) {
 		sendSimpleMail(
-			adminEmailConfig.getAuthEmailSender(),
+			serviceConfig.getSenderAddress(),
 			receiverEmailAddress,
 			"제목",
 			"본문 코드"

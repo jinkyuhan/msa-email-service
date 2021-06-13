@@ -18,7 +18,7 @@ public class MailServiceTest {
 		try {
 			mailService.sendAuthenticationMail("hjg0911@naver.com");
 		} catch (ByServerException exception) {
-			System.
+			System.out.println(exception.getMessage());
 		}
   }
 }

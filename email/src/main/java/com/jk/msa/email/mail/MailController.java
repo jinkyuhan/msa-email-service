@@ -33,6 +33,8 @@ public class MailController {
 	@ApiOperation("등록을 위한 인증 메일 전송")
 	@PostMapping("/send-authentication") 
 	public CommonResponse<Void> sendMailToUsers(SendAuthMailDto dto) {
+		
+		
 		// mailSerivce.createUnAuthenticatedNewAccount 
 		mailService.sendAuthenticationMail(dto.getTargetEmailAddress());
 		return new CommonResponse<Void>(ApiResult.SUCCESS);
