@@ -3,7 +3,6 @@ package com.jk.msa.email.mail;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import javax.mail.internet.MimeMessage;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,13 +14,15 @@ import javax.persistence.Table;
 import com.jk.msa.email.account.entity.Account;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.mail.MailMessage;
-import org.springframework.mail.javamail.MimeMailMessage;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "mail")
 public class Mail{
 
@@ -31,10 +32,6 @@ public class Mail{
   @Embedded
   @Column
   private MailContent content;
-
-  @ManyToOne()
-  @JoinColumn(name = "sender_id")
-  private Account sender;
 
   @ManyToOne()
   @JoinColumn(name = "receiver_id")
@@ -52,18 +49,7 @@ public class Mail{
 
   public Mail(Account sender, Account receiver, MailContent content) {
     this.id = UUID.randomUUID().toString();
-    this.sender = sender;
     this.receiver = receiver;
     this.content = content;
-  }
-
-  public MailMessage getMailMessage() {
-		MimeMessage mime = new MimeMessage();
-		MimeMailMessage mailMessage = new MimeMailMessage();
-		mailMessage.setFrom(this.sender.getMailAddress());
-		mailMessage.setTo(this.receiver.getMailAddress());
-		mailMessage.setSubject(this.content.getTitle());
-		mailMessage.setText(this.content.getBody());
-		return mailMessage;
   }
 }

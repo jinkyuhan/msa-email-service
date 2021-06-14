@@ -6,7 +6,6 @@ import javax.mail.internet.MimeMessage;
 import com.jk.msa.email.account.repository.AccountRepository;
 import com.jk.msa.email.common.exception.ByServerException;
 import com.jk.msa.email.config.ServiceConfig;
-import com.jk.msa.email.mail.dto.SendMailDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -32,32 +31,24 @@ public class MailService {
 
 	public void sendAuthenticationMail(String receiverEmailAddress) {
 		sendSimpleMail(
-			serviceConfig.getSenderAddress(),
 			receiverEmailAddress,
 			"제목",
 			"본문 코드"
 		);
 	}
 
-  public int sendMail(SendMailDto sendMailDto) {
-    Mail newMail = new Mail();
-    mailSender.send((MimeMessage) newMail.getMailMessage());
-    return 1;
-  }
-
-
 	private void sendSimpleMail(
-		String senderMailAddress,
+		Mail mailToSend,
 		String receiverMailAddress,
 		String title,
 		String body
 	) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom(senderMailAddress);
-			message.setTo(receiverMailAddress);
-			message.setSubject(title);
-			message.setText(body);
+			message.setFrom(serviceConfig.getSenderAddress());
+			message.setTo(mailToSend.getReceiver().getMailAddress());
+			message.setSubject(mailToSend.getContent().getTitle());
+			message.setText(mailToSend.getContent().getBody());
 			mailSender.send(message);
 		} catch (Exception e) {
 			throw new ByServerException(e.getMessage());
