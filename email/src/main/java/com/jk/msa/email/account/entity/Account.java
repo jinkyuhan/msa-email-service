@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.jk.msa.email.common.utils.DateUtils;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -35,6 +37,7 @@ public class Account {
 	@Column(name = "authentication_code", nullable = true)
 	private String authenticationCode;
 	
+	@Setter
 	@Column(name = "authentication_code_expired_time", nullable = true) 
 	private LocalDateTime authenticationCodeExpiredTime;
 
@@ -49,9 +52,27 @@ public class Account {
   @Column(name = "update_time")
   private LocalDateTime updatedTime;
 
+	@Setter
+	@Column(name = "tag")
+	private String tag;
+
 	public Account(String userId, String mailAddress) {
 		this.id = UUID.randomUUID().toString();
 		this.userId = userId;
 		this.mailAddress = mailAddress;
+	}
+
+	public boolean isAuthenticated() {
+		return this.authenticatedSuccessTime != null;
+	}
+
+	public boolean isAuthenticatedSince(long since) {
+		return this.isAuthenticated()
+				&& this.authenticatedSuccessTime
+						.isAfter(DateUtils.longTimestampToLocalDateTime(since));
+	}
+
+	public boolean validateAuthCode(String authCode) {
+		return this.authenticationCode == authCode;
 	}
 }

@@ -1,16 +1,17 @@
 package com.jk.msa.email.account;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.jk.msa.email.account.entity.Account;
 import com.jk.msa.email.account.repository.AccountRepository;
-import com.jk.msa.email.common.ApiResult;
-import com.jk.msa.email.common.exception.RequestFailException;
-import com.jk.msa.email.common.utils.DateUtils;
 import com.jk.msa.email.common.utils.RandomUtils;
 import com.jk.msa.email.config.ServiceConfig;
+import com.jk.msa.email.mail.Mail;
+import com.jk.msa.email.mail.MailContent;
+import com.jk.msa.email.mail.MailLauncher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,11 @@ public class AccountService {
 	@Autowired
 	private ServiceConfig serviceConfig;
 
-	public List<Account> findAccountsByEmail(String emailAddress) {
-		return accountRepository
-				.findByMailAddress(emailAddress)
-				.orElseGet(() -> new ArrayList<Account>());
-	}
+	@Autowired
+	private MailLauncher mailLauncher;
 
-	public boolean isAlreadyExistEmail(String email) {
-		return accountRepository.findByMailAddress(email).orElseGet(() ->null) != null;
+	public boolean isAlreadyExistEmail(String emailAddress) {
+		return accountRepository.findByMailAddress(emailAddress).orElseGet(() ->null) != null;
 	}
 	
 	public void cleanCreateNewAccount(String userId, String email) {
@@ -45,44 +43,25 @@ public class AccountService {
 				.collect(Collectors.toList())
 				.size() > 0;
 	}
-	
-	public boolean isAuthenticatedAccount(Account account) {
-		return account.getAuthenticatedSuccessTime() != null;
-	}
-	public boolean isAuthenticatedAccount(String userId, String emailAddress) {
-		return isAuthenticatedAccount(findAccountByUserIdAndEmailAddress(userId, emailAddress));
-	}
 
-	public boolean isAuthenticatedAccountSince(Account account, Long since) {
-		return isAuthenticatedAccount(account)
-				&& account.getAuthenticatedSuccessTime().isAfter(DateUtils.longTimestampToLocalDateTime(since));
-	}
-
-	public boolean isAuthenticatedAccount(String userId, String emailAddress, Long since) {
-		return isAuthenticatedAccountSince(
-			findAccountByUserIdAndEmailAddress(userId, emailAddress),
-			since
-		);
-	}
-
-	public void assignRandomAuthCodeToAccount(Account account) {
+	public void prepareAuthentication(Account account) {
+		//TODO transaction
 		account.setAuthenticationCode(RandomUtils.getRandomString(serviceConfig.getAuthCodeLength()));
+		account.setAuthenticationCodeExpiredTime(
+			LocalDateTime
+					.now()
+					.plus(
+						serviceConfig.getAuthCodeTTLMinutes(),
+						ChronoUnit.MINUTES
+					)
+		);
 		accountRepository.save(account);
-	}
 
-	public void assignRandomAuthCodeToAccount(String userId, String emailAddress, String code) {
-		assignRandomAuthCodeToAccount(findAccountByUserIdAndEmailAddress(userId, emailAddress));
+		Mail authMail = new Mail(
+			account,
+			new MailContent("인증 제목", "인증 내용")
+		);
+		mailLauncher.sendMimeMail(authMail);
+		// 인증 메일은 DB에 저장 안함
 	}
-	
-	public Account findAccountByUserIdAndEmailAddress(String userId, String emailAddress) {
-		return accountRepository
-				.findByUserIdAndMailAddress(userId, emailAddress)
-				.orElseThrow(() -> new RequestFailException(ApiResult.NOT_EXIST_ACCOUNT));
-	}
-
-	public boolean validateAuthenticationCode(String userId, String emailAddress, String code) {
-		Account matchedAccount = findAccountByUserIdAndEmailAddress(userId, emailAddress)
-		return matchedAccount.getAuthenticationCode() == code;
-	}
-
 }

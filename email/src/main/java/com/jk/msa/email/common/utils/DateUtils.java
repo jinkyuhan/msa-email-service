@@ -16,6 +16,5 @@ public class DateUtils {
 			TimeZone.getDefault().toZoneId()
 		);
 	}
-	
 }
 

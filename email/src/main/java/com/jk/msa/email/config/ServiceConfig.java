@@ -21,7 +21,7 @@ public class ServiceConfig {
 	private String senderAddress;
 
 	@Value("${service.mail.authCode.ttl}")
-	private int authCodeTTL;
+	private int authCodeTTLMinutes;
 
 	@Value("${service.mail.authCode.length}")
 	private int authCodeLength;

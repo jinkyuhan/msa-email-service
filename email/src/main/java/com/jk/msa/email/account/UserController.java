@@ -43,7 +43,9 @@ public class UserController {
 	@PostMapping(value = "/account")
 	@ApiOperation(value = "유저에게 메일 등록")
 	public CommonResponse<Void> registerAccount(@RequestBody EmailRegistrationDto dto) {
-		List<Account> matchedAccounts = accountService.findAccountsByEmail(dto.getEmailAddress());
+		List<Account> matchedAccounts = accountRepository
+				.findByMailAddress(dto.getEmailAddress())
+				.orElseGet(() -> new ArrayList<Account>());
 
 		if (matchedAccounts.size() == 0) {
 			accountService.cleanCreateNewAccount(dto.getUserId(), dto.getEmailAddress());
