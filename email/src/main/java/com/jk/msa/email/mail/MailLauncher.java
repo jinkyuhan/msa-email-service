@@ -1,3 +1,5 @@
+package com.jk.msa.email.mail;
+
 import com.jk.msa.email.common.exception.ByServerException;
 import com.jk.msa.email.config.ServiceConfig;
 

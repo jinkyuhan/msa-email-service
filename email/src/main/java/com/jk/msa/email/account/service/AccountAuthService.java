@@ -1,9 +1,7 @@
-package com.jk.msa.email.account;
+package com.jk.msa.email.account.service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import com.jk.msa.email.account.entity.Account;
 import com.jk.msa.email.account.repository.AccountRepository;
@@ -15,9 +13,10 @@ import com.jk.msa.email.mail.MailLauncher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class AccountService {
+public class AccountAuthService {
 
 	@Autowired
 	private AccountRepository accountRepository;
@@ -28,24 +27,8 @@ public class AccountService {
 	@Autowired
 	private MailLauncher mailLauncher;
 
-	public boolean isAlreadyExistEmail(String emailAddress) {
-		return accountRepository.findByMailAddress(emailAddress).orElseGet(() ->null) != null;
-	}
-	
-	public void cleanCreateNewAccount(String userId, String email) {
-		this.accountRepository.save(new Account(userId, email));
-	}
-
-	public boolean isUserInAccounts(String userId, List<Account> accounts) {
-		return accounts
-				.stream()
-				.filter(account -> account.getUserId() == userId)
-				.collect(Collectors.toList())
-				.size() > 0;
-	}
-
-	public void prepareAuthentication(Account account) {
-		//TODO transaction
+	@Transactional
+	public void prepareAndSendAuthentication(Account account) {
 		account.setAuthenticationCode(RandomUtils.getRandomString(serviceConfig.getAuthCodeLength()));
 		account.setAuthenticationCodeExpiredTime(
 			LocalDateTime
@@ -59,9 +42,13 @@ public class AccountService {
 
 		Mail authMail = new Mail(
 			account,
-			new MailContent("인증 제목", "인증 내용")
+				new MailContent(
+					"[" + serviceConfig.getServiceName() + "] 서비스 본인인증 확인용 메일입니다.",
+					account.getAuthenticationCode()
+				)
 		);
 		mailLauncher.sendMimeMail(authMail);
 		// 인증 메일은 DB에 저장 안함
 	}
+
 }

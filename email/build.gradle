@@ -34,11 +34,14 @@ dependencies {
   // Spring boot mail
   // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.0'
-
-  
+ 
   // Spring boot JPA
   // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.3'
+
+	// Spring boot thymeleaf
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.5.1'
 
   // Lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -48,8 +51,8 @@ dependencies {
   // https://mvnrepository.com/artifact/org.postgresql/postgresql
   implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
-  // https://mvnrepository.com/artifact/com.h2database/h2
-  runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
+  // // https://mvnrepository.com/artifact/com.h2database/h2
+  // runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
 
   // Uml generation for javadoc
   umlDoclet "nl.talsmasoftware:umldoclet:2.0.12"
@@ -73,7 +76,9 @@ javadoc {
   source = sourceSets.main.allJava
   options.docletpath = configurations.umlDoclet.files.asType(List)
   options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
-  // options.addStringOption "--uml-image-directory", "docs"
+  // options.addStringOption("--uml-image-directory", "./docs")
+	options.addStringOption("encoding", "UTF-8")
+	options.addStringOption("charSet", "UTF-8")
 }
 
 springBoot { 

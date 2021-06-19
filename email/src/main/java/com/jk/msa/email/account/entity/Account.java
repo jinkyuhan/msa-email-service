@@ -6,10 +6,13 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.jk.msa.email.common.utils.DateUtils;
 
+import org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -72,7 +75,24 @@ public class Account {
 						.isAfter(DateUtils.longTimestampToLocalDateTime(since));
 	}
 
-	public boolean validateAuthCode(String authCode) {
-		return this.authenticationCode == authCode;
+	public boolean validateAuthCode(String authCode) { 
+		boolean isValidateAuthCode = 
+			this.authenticationCode.equals(authCode)
+			&& LocalDateTime.now().isBefore(this.authenticationCodeExpiredTime);
+		if (isValidateAuthCode) {
+			this.authenticatedSuccessTime = LocalDateTime.now();
+		}
+		return isValidateAuthCode;
 	}
+
+	@PrePersist
+	private void createdAt() {
+		this.createdTime = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		this.updatedTime = LocalDateTime.now();
+	}
+
 }

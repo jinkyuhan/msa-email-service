@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.jk.msa.email.account.entity.Account;
+import com.jk.msa.email.common.ApiResult;
+import com.jk.msa.email.common.exception.RequestFailException;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.mail.SimpleMailMessage;
@@ -84,4 +86,5 @@ public class Mail{
 		};
 		return preparator;
 	}
+
 }

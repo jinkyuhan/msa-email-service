@@ -15,7 +15,7 @@ public class CommonRestControllerAdvice {
 
 	@ExceptionHandler(RequestFailException.class)
 	public CommonResponse<Void> handleRequestFailException(RequestFailException exception) {
-		// TODO: 에러 로깅 제대로 하기
+		// TODO: 에러 파일 로깅 제대로 하기
 		System.out.println(exception.getMessage());
 		return new CommonResponse<Void>(exception.getApiResult());
 	}
@@ -23,7 +23,7 @@ public class CommonRestControllerAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(ByServerException.class) 
 	public CommonResponse<Void> handleByServerException(ByServerException exception) {
-		// TODO: 에러 로깅 제대로 하기
+		// TODO: 에러 파일 로깅 제대로 하기
 		System.out.println(exception.getMessage());
 		return new CommonResponse<Void>(ApiResult.UNKNOWN_ERROR);
 	}

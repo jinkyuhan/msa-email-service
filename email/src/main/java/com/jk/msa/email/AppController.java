@@ -16,4 +16,9 @@ public class AppController {
 	public RedirectView redirectApiDocs() {
 		return new RedirectView("swagger-ui.html");
 	}
+
+	@GetMapping(value = "/dev-db")
+	public RedirectView redirectDevDB() {
+		return new RedirectView("h2-console");
+	}
 }

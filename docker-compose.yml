@@ -5,26 +5,26 @@ services:
     volumes:
       - pg-dump:/var/lib/postgresql/data
     ports:
-      - 65432:5432
+      - 5432:5432
     environment:
-      - POSTGRES_USER=jk_email
-      - POSTGRES_PASSWORD=jk_email
-      - POSTGRES_DB=jk_email
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=email
 
-  email:
-    image: jinkyuhan/msa-email-service
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: development
-    ports:
-      - 8080:8080
-      - 5080:5080
-      - 35729:35729
-    volumes:
-      - ./email:/email-app
-    depends_on:
-      - db
+  # email:
+  #   image: jinkyuhan/msa-email-service
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: development
+  #   ports:
+  #     - 8080:8080
+  #     - 5080:5080
+  #     - 35729:35729
+  #   volumes:
+  #     - ./email:/email-app
+  #   depends_on:
+  #     - db
 
 volumes:
   pg-dump:
