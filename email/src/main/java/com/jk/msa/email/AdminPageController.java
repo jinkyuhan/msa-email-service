@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/page/admin")
 public class AdminPageController {
 
-	@GetMapping
-	public String renderIndex() {
-		return "index";
+	@GetMapping("/account")
+	public String renderAccountPage() {
+		return "account";
+	}
+
+	@GetMapping("/mail")
+	public String renderMailPage() {
+		return "mail";
 	}
 	
 }

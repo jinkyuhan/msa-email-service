@@ -12,11 +12,13 @@ spring:
                         enable: true
 
 service:
+    name: example
     mail:
-    service:
-        name: example
-        mail:
-          senderAddress: gkswlsrb95@gmail.com
-          expiration-minutes: 30
-          auth-code-length: 6
-    
+        senderAddress: gkswlsrb95@gmail.com
+        authCode:
+          ttl: 30
+          length: 6
+    tableName:
+        mail: mail
+        account: account
+
