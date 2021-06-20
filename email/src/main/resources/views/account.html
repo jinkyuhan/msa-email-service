@@ -5,6 +5,76 @@
 		<th:block th:replace="fragments/navbar.html
 			:: navbar(account='active', mail='inactive')"></th:block>
 		<div class="container">
+			<button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="init()"> 새로고침</button>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">유저ID</th>
+						<th scope="col">메일주소</th>
+						<th scope="col">최근인증코드</th>
+						<th scope="col">인증코드만료기한</th>
+						<th scope="col">최근인증일시</th>
+					</tr>
+				</thead>
+				<tbody id="account-list">
+				</tbody>
+			</table>
 		</div>
+
+		<script>
+
+			window.onload = init;
+
+			function init() {
+				clearTable();
+				fetchTable({
+					pageNum: 0,
+					perPage: 10,
+				});
+			}
+			
+			async function fetchTable(params) {
+				const response = (await searchAsync(params));
+				if (response.resultCode && response.resultCode === "00" ) {
+					response.data.accounts.forEach(account => {
+						const newRowElement = document.createElement("tr");
+
+						const idElement = document.createElement("td");
+						idElement.textContent = account.id;
+						const userIdElement = document.createElement("td");
+						userIdElement.textContent = account.userId;
+						const addressElement = document.createElement("td");
+						addressElement.textContent = account.mailAddress;
+						const authCodeElement = document.createElement("td");
+						authCodeElement.textContent = account.authenticationCode;
+						const authCodeExpiredElement = document.createElement("td");
+						authCodeExpiredElement.textContent = parseDateString(
+							new Date(account.authenticationCodeExpiredTime)
+						);
+						const lastAuthElement = document.createElement("td");
+						lastAuthElement.textContent = parseDateString(
+							new Date(account.authenticatedSuccessTime)
+						);
+
+						newRowElement.appendChild(idElement);
+						newRowElement.appendChild(userIdElement);
+						newRowElement.appendChild(addressElement);
+						newRowElement.appendChild(authCodeElement);
+						newRowElement.appendChild(authCodeExpiredElement);
+						newRowElement.appendChild(lastAuthElement);
+
+						document.getElementById("account-list").appendChild(newRowElement);
+					})
+				}
+			}
+
+			function clearTable() {
+				const table = document.getElementById("account-list");
+				while(table.hasChildNodes()) {
+					table.removeChild(table.firstChild);
+				}
+			};
+		</script>
 	</body>
 </html>

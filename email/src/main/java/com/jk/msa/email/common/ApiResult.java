@@ -9,7 +9,9 @@ public enum ApiResult {
 	INVALID_AUTHENTICATION_CODE("48", "유효하지 않은 인증 코드"),
 	ALREADY_AUTHENTICATED("49", "이미 인증된 계정임"),
 	MESSAGE_SENDING_FAIL("51", "이메일 전송 실패"),
-	UNKNOWN_ERROR("99", "알수 없는 에러 발생, 서버 로그 확인 요망");
+	UNKNOWN_ERROR("99", "알수 없는 에러 발생, 서버 로그 확인 요망"),
+	BAD_PARAMETER("40", "잘못된 입력 파라미터 입니다.");
+	
 
   private final String resultCode;
   private final String resultMessage;

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import com.jk.msa.email.common.utils.DateUtils;
 
-import org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -27,33 +26,33 @@ import lombok.Setter;
 @Getter
 public class Account {
 
-  @Id
-  private String id;
+	@Id
+	private String id;
 
-  @Column(name = "mail_address", unique = true, nullable = true)
-  private String mailAddress;
+	@Column(name = "mail_address", unique = true, nullable = true)
+	private String mailAddress;
 
-  @Column(name = "user_id", nullable = true)
-  private String userId;
+	@Column(name = "user_id", nullable = true)
+	private String userId;
 
 	@Setter
 	@Column(name = "authentication_code", nullable = true)
 	private String authenticationCode;
-	
+
 	@Setter
-	@Column(name = "authentication_code_expired_time", nullable = true) 
+	@Column(name = "authentication_code_expired_time", nullable = true)
 	private LocalDateTime authenticationCodeExpiredTime;
 
-  @Column(name = "authenticated_time", nullable = true)
-  private LocalDateTime authenticatedSuccessTime;
+	@Column(name = "authenticated_time", nullable = true)
+	private LocalDateTime authenticatedSuccessTime;
 
-  @CreatedDate
-  @Column(name = "create_time")
-  private LocalDateTime createdTime;
+	@CreatedDate
+	@Column(name = "create_time")
+	private LocalDateTime createdTime;
 
-  @LastModifiedDate
-  @Column(name = "update_time")
-  private LocalDateTime updatedTime;
+	@LastModifiedDate
+	@Column(name = "update_time")
+	private LocalDateTime updatedTime;
 
 	@Setter
 	@Column(name = "tag")
@@ -71,14 +70,12 @@ public class Account {
 
 	public boolean isAuthenticatedSince(long since) {
 		return this.isAuthenticated()
-				&& this.authenticatedSuccessTime
-						.isAfter(DateUtils.longTimestampToLocalDateTime(since));
+				&& this.authenticatedSuccessTime.isAfter(DateUtils.longTimestampToLocalDateTime(since));
 	}
 
-	public boolean validateAuthCode(String authCode) { 
-		boolean isValidateAuthCode = 
-			this.authenticationCode.equals(authCode)
-			&& LocalDateTime.now().isBefore(this.authenticationCodeExpiredTime);
+	public boolean validateAuthCode(String authCode) {
+		boolean isValidateAuthCode = this.authenticationCode.equals(authCode)
+				&& LocalDateTime.now().isBefore(this.authenticationCodeExpiredTime);
 		if (isValidateAuthCode) {
 			this.authenticatedSuccessTime = LocalDateTime.now();
 		}
