@@ -1,4 +1,4 @@
-package com.jk.msa.email.mail;
+package com.jk.msa.email.mail.entity;
 
 import javax.persistence.Embeddable;
 
@@ -11,6 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MailContent {
-  private String title;
-  private String body;
+	private String title;
+	private String body;
 }

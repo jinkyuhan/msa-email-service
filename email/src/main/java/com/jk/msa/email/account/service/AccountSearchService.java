@@ -49,11 +49,15 @@ public class AccountSearchService {
 		}
 	}
 
-	public List<Account> findByEmailAddress(String emailAddress) {
+	public Account searchByAccountId(String accountId) {
+		return accountRepository.findById(accountId).orElse(null);
+	}
+
+	public List<Account> searchByEmailAddress(String emailAddress) {
 		return accountRepository.findByMailAddress(emailAddress);
 	}
 
-	public List<Account> findByUserId(String userId) {
+	public List<Account> searchByUserId(String userId) {
 		return accountRepository.findByUserId(userId);
 	}
 }

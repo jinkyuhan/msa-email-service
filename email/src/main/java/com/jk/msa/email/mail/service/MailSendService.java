@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MailService {
+public class MailSendService {
 
-  @Autowired(required = true)
-  private MailRepository mailRepository;
+	@Autowired(required = true)
+	private MailRepository mailRepository;
 
-  @Autowired
-  private AccountRepository accountRepository;
+	@Autowired
+	private AccountRepository accountRepository;
 
 	@Autowired
 	private MailLauncher mailLauncher;

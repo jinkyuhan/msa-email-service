@@ -15,6 +15,7 @@
 						<th scope="col">최근인증코드</th>
 						<th scope="col">인증코드만료기한</th>
 						<th scope="col">최근인증일시</th>
+						<th scope="col">인증코드전송</th>
 					</tr>
 				</thead>
 				<tbody id="account-list">
@@ -35,36 +36,11 @@
 			}
 			
 			async function fetchTable(params) {
-				const response = (await searchAsync(params));
-				if (response.resultCode && response.resultCode === "00" ) {
+				const response = (await searchAccountsAsync(params));
+				if (response.resultCode === "00" ) {
 					response.data.accounts.forEach(account => {
-						const newRowElement = document.createElement("tr");
-
-						const idElement = document.createElement("td");
-						idElement.textContent = account.id;
-						const userIdElement = document.createElement("td");
-						userIdElement.textContent = account.userId;
-						const addressElement = document.createElement("td");
-						addressElement.textContent = account.mailAddress;
-						const authCodeElement = document.createElement("td");
-						authCodeElement.textContent = account.authenticationCode;
-						const authCodeExpiredElement = document.createElement("td");
-						authCodeExpiredElement.textContent = parseDateString(
-							new Date(account.authenticationCodeExpiredTime)
-						);
-						const lastAuthElement = document.createElement("td");
-						lastAuthElement.textContent = parseDateString(
-							new Date(account.authenticatedSuccessTime)
-						);
-
-						newRowElement.appendChild(idElement);
-						newRowElement.appendChild(userIdElement);
-						newRowElement.appendChild(addressElement);
-						newRowElement.appendChild(authCodeElement);
-						newRowElement.appendChild(authCodeExpiredElement);
-						newRowElement.appendChild(lastAuthElement);
-
-						document.getElementById("account-list").appendChild(newRowElement);
+						document.getElementById("account-list")
+							.appendChild(createAccountRow(account));
 					})
 				}
 			}
@@ -75,6 +51,116 @@
 					table.removeChild(table.firstChild);
 				}
 			};
+
+			function createAccountRow(account) {
+				const newRow = document.createElement("tr");
+				newRow.setAttribute("id", `account-${account.id}`)
+
+				const idCol = document.createElement("td");
+				idCol.textContent = account.id;
+				idCol.className = "account-id"
+				idCol.setAttribute("value", account.id);
+
+				const userIdCol = document.createElement("td");
+				userIdCol.textContent = account.userId;
+				userIdCol.className = "user-id"
+				userIdCol.setAttribute("value", account.userId);
+
+				const addressCol = document.createElement("td");
+				addressCol.textContent = account.mailAddress;
+				addressCol.className = "email-address"
+				addressCol.setAttribute("value", account.mailAddress);
+
+				const authCodeCol = document.createElement("td");
+				authCodeCol.textContent = account.authenticationCode;
+				authCodeCol.className = "auth-code"
+				authCodeCol.setAttribute("value", account.authenticationCode);
+
+				const authCodeExpiredCol = document.createElement("td");
+				authCodeExpiredCol.textContent = parseDateString(
+					new Date(account.authenticationCodeExpiredTime)
+				);
+				authCodeExpiredCol.className = "auth-code-expired"
+				authCodeExpiredCol.setAttribute("value", account.authenticationCodeExpiredTime);
+
+				const lastAuthCol = document.createElement("td");
+				lastAuthCol.textContent = parseDateString(
+					new Date(account.authenticatedSuccessTime)
+				);
+				lastAuthCol.className = "last-auth";
+				lastAuthCol.setAttribute("value", account.authenticatedSuccessTime);
+
+				newRow.appendChild(idCol);
+				newRow.appendChild(userIdCol);
+				newRow.appendChild(addressCol);
+				newRow.appendChild(authCodeCol);
+				newRow.appendChild(authCodeExpiredCol);
+				newRow.appendChild(lastAuthCol);
+
+				const resendButton = document.createElement("button");
+				resendButton.textContent = "재전송";
+				resendButton.setAttribute("type", "button");
+				resendButton.className = "btn btn-primary"
+				resendButton.onclick = () => { resendAuthMail(account.id) }
+				const resendCol = document.createElement("td");
+				resendCol.appendChild(resendButton);
+				newRow.appendChild(resendCol);
+
+				return newRow;
+			}
+
+			async function resendAuthMail(accountId) {
+				if (!confirm("인증을 위한 보안코드가 포함된 메일을 재전송 하시겠습니까?")) {
+					return;
+				}
+				let userIdElement;
+				let emailElement;
+				let authCodeElement;
+				let authCodeExpiredElement;
+				for(const child of document.getElementById(`account-${accountId}`).children){
+					if (child.className === "user-id") {
+						userIdElement = child;
+					}
+					if (child.className === "email-address") {
+						emailElement = child;
+					}
+					if (child.className === "auth-code") {
+						authCodeElement = child;
+					}
+					if (child.className === "auth-code-expired") {
+						authCodeExpiredElement = child;
+					}
+				}
+				emailElement.textContent = "...";
+				authCodeElement.textContent = "...";
+				authCodeExpiredElement.textContent = "...";
+
+				try {
+					const response = await sendAuthMailAsync({
+						userId: userIdElement.getAttribute("value"),
+						email: emailElement.getAttribute("value"),
+					})
+				
+					if (response.resultCode !== "00") {
+						alert("재전송에 실패하였습니다"); 
+						location.reload();
+						return;
+					}
+					const updatedAccount = (await searchAccountByIdAsync(accountId)).data.account;
+					emailElement.setAttribute("value", updatedAccount.mailAddress);
+					emailElement.textContent = updatedAccount.mailAddress;
+					authCodeElement.setAttribute("value", updatedAccount.authenticationCode);
+					authCodeElement.textContent = updatedAccount.authenticationCode;
+					authCodeExpiredElement.setAttribute("value", updatedAccount.authenticationCodeExpiredTime);
+					authCodeExpiredElement.textContent = parseDateString(
+						new Date(updatedAccount.authenticationCodeExpiredTime)
+					);
+				} catch (err) {
+					console.log(err)
+					alert("재전송에 실패하였습니다"); 
+				}
+			}
+
 		</script>
 	</body>
 </html>

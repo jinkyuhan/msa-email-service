@@ -18,6 +18,7 @@ import com.jk.msa.email.common.exception.RequestFailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,7 @@ public class AccountController {
 			@RequestParam(name = "query", required = false) String query,
 			@RequestParam(name = "pageNum", required = false) Integer pageNum,
 			@RequestParam(name = "perPage", required = false) Integer perPage) {
+
 		SearchOptionDto searchOption = new SearchOptionDto(query, subject);
 		Map<String, List<Account>> responseData = new HashMap<String, List<Account>>();
 		if (pageNum != null && perPage != null) {
@@ -55,6 +57,14 @@ public class AccountController {
 		}
 		responseData.put("accounts", accountSearchService.search(searchOption));
 		return new CommonResponse<Map<String, List<Account>>>(ApiResult.SUCCESS, responseData);
+	}
+
+	@GetMapping(value = "/{id}")
+	@ApiOperation(value = "계정 id로 조회")
+	public CommonResponse<Map<String, Account>> searchById(@PathVariable("id") String accountId) {
+		Map<String, Account> responseData = new HashMap<String, Account>();
+		responseData.put("account", accountSearchService.searchByAccountId(accountId));
+		return new CommonResponse<Map<String, Account>>(ApiResult.SUCCESS, responseData);
 	}
 
 	@GetMapping(value = "/is-authenticated")
@@ -71,17 +81,11 @@ public class AccountController {
 
 	@PostMapping(value = "/prepare-authentication")
 	@ApiOperation(value = "새로운 계정 등록 및 인증 메일 전송")
-	public CommonResponse<Void> prepareAccountAuthentication(@RequestBody AuthPrepareDto dto) {
+	public CommonResponse<Void> prepareAccountAuthentication(@RequestBody final AuthPrepareDto dto) {
 		Account accountToAuthenticate = accountRepository.findByUserIdAndMailAddress(dto.getUserId(), dto.getEmailAddress())
 				.orElse(null);
 
-		// check if the account is already authenticated
-		if (accountToAuthenticate != null) {
-			if (accountToAuthenticate.isAuthenticated()) {
-				throw new RequestFailException(ApiResult.ALREADY_AUTHENTICATED);
-			}
-		} else {
-			// if not exist, create new one
+		if (accountToAuthenticate == null) {
 			accountToAuthenticate = new Account(dto.getUserId(), dto.getEmailAddress());
 		}
 		accountToAuthenticate.setTag(dto.getTag());
@@ -95,10 +99,6 @@ public class AccountController {
 	public CommonResponse<Void> validateAccountAuthentication(@RequestBody AuthValidateDto dto) {
 		Account accountToValidate = accountRepository.findByUserIdAndMailAddress(dto.getUserId(), dto.getEmailAddress())
 				.orElseThrow(() -> new RequestFailException(ApiResult.NOT_EXIST_ACCOUNT));
-
-		if (accountToValidate.isAuthenticated()) {
-			throw new RequestFailException(ApiResult.ALREADY_AUTHENTICATED);
-		}
 
 		if (!accountToValidate.validateAuthCode(dto.getAuthCode())) {
 			throw new RequestFailException(ApiResult.INVALID_AUTHENTICATION_CODE);

@@ -14,8 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.jk.msa.email.account.entity.Account;
-import com.jk.msa.email.common.ApiResult;
-import com.jk.msa.email.common.exception.RequestFailException;
+import com.jk.msa.email.mail.entity.MailContent;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,35 +30,34 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "mail")
-public class Mail{
+public class Mail {
 
-  @Id
-  private String id;
+	@Id
+	private String id;
 
-  @ManyToOne()
-  @JoinColumn(name = "receiver_id")
-  private Account receiver;
+	@ManyToOne()
+	@JoinColumn(name = "receiver_id")
+	private Account receiver;
 
-  @Embedded
-  @Column
-  private MailContent content;
+	@Embedded
+	@Column
+	private MailContent content;
 
-  @Column(name = "tag_1")
-  private String tag1;
+	@Column(name = "tag_1")
+	private String tag1;
 
-  @Column(name = "tag_2")
-  private String tag2;
+	@Column(name = "tag_2")
+	private String tag2;
 
-  @CreatedDate
-  @Column(name = "created_time")
-  private LocalDateTime createTime;
+	@CreatedDate
+	@Column(name = "created_time")
+	private LocalDateTime createTime;
 
-  public Mail(Account receiver, MailContent content) {
-    this.id = UUID.randomUUID().toString();
-    this.receiver = receiver;
-    this.content = content;
-  }
-
+	public Mail(Account receiver, MailContent content) {
+		this.id = UUID.randomUUID().toString();
+		this.receiver = receiver;
+		this.content = content;
+	}
 
 	public SimpleMailMessage toSimpleMailMessage(String senderEmailAddress) {
 		SimpleMailMessage message = new SimpleMailMessage();
