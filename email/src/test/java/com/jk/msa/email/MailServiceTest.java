@@ -1,7 +1,7 @@
 package com.jk.msa.email;
 
 import com.jk.msa.email.common.exception.ByServerException;
-import com.jk.msa.email.mail.MailSendService;
+import com.jk.msa.email.mail.service.MailSendService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

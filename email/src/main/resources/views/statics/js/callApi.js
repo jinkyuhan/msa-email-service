@@ -48,5 +48,25 @@ async function sendAuthMailAsync(params) {
 }
 
 async function searchMailAsync(params) {
-  return await fetch('/v1/mail');
+  const requestParams = new URLSearchParams();
+  if (params) {
+    if (params.subject) {
+      requestParams.set('subject', params.subject);
+    }
+    if (params.query) {
+      requestParams.set('query', params.query);
+    }
+    if (params.perPage !== undefined) {
+      requestParams.set('perPage', params.perPage);
+    }
+    if (params.pageNum !== undefined) {
+      requestParams.set('pageNum', params.pageNum);
+    }
+  }
+  return (
+    await fetch('/v1/mail/?' + requestParams.toString(), {
+      method: 'GET',
+      credentials: 'same-origin',
+    })
+  ).json();
 }

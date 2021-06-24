@@ -1,4 +1,4 @@
-package com.jk.msa.email.account.dto;
+package com.jk.msa.email.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchOptionDto {
-	private String query;
-	private String subject;
+  private String query;
+  private String subject;
 }
