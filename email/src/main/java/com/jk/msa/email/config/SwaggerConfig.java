@@ -11,24 +11,18 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@EnableSwagger2
 @Configuration
+@EnableSwagger2
 public class SwaggerConfig {
 
   @Bean
   public Docket api() {
-    return new Docket(DocumentationType.SWAGGER_2)
-        .apiInfo(buildApiInfo())
-        .select()
-        .apis(RequestHandlerSelectors.any())
-        .paths(PathSelectors.any())
-        .build();
+    return new Docket(DocumentationType.SWAGGER_2).apiInfo(buildApiInfo()).select().apis(RequestHandlerSelectors.any())
+        .paths(PathSelectors.any()).build();
   }
 
   private ApiInfo buildApiInfo() {
-    return new ApiInfoBuilder()
-        .title("Email Service")
-        .version("0.0.0")
+    return new ApiInfoBuilder().title("Email Service").version("0.0.0")
         .description("Reusable micro service for email sending system").build();
 
   }

@@ -15,6 +15,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
   public List<Account> findByUserId(String userId);
 
+  public List<Account> findByUserIdIn(String[] userId);
+
   public List<Account> findByUserIdContaining(String userIdQuery);
 
   public Page<Account> findByUserIdContaining(String userIdQuery, Pageable pageable);

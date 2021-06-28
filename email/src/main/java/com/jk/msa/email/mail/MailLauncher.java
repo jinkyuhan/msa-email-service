@@ -11,25 +11,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailLauncher {
 
-	@Autowired
-	private JavaMailSender mailSender;
+  @Autowired
+  private JavaMailSender mailSender;
 
-	@Autowired
-	private ServiceConfig serviceConfig;
+  @Autowired
+  private ServiceConfig serviceConfig;
 
-	public void sendSimpleMail(Mail mailToSend) {
-		try {
-			mailSender.send(mailToSend.toSimpleMailMessage(serviceConfig.getSenderAddress()));
-		} catch (Exception e) {
-			throw new ByServerException(e.getMessage());
-		}
-	}
+  public void sendSimpleMail(Mail mailToSend) {
+    try {
+      mailSender.send(mailToSend.toSimpleMailMessage(serviceConfig.getSenderAddress()));
+    } catch (Exception e) {
+      throw new ByServerException(e.getMessage());
+    }
+  }
 
-	public void sendMimeMail(Mail mailToSend) {
-		try {
-			mailSender.send(mailToSend.toSimpleMailMessage(serviceConfig.getSenderAddress()));
-		} catch (Exception e) {
-			throw new ByServerException(e.getMessage());
-		}
-	}
+  public void sendMimeMail(Mail mailToSend) {
+    try {
+      mailSender.send(mailToSend.toMimeMessagePreparator(serviceConfig.getSenderAddress(), false));
+    } catch (Exception e) {
+      throw new ByServerException(e.getMessage());
+    }
+  }
 }
