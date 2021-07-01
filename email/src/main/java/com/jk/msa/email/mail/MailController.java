@@ -49,6 +49,14 @@ public class MailController {
     return new CommonResponse<Map<String, List<Mail>>>(ApiResult.SUCCESS, responseData);
   }
 
+//  @ApiOperation("메일 상세 검색")
+//  @GetMapping("/")
+//  public CommonResponse<Map<String, Mail>> searchMailById(@RequestParam(name = "id", required = true) String id) {
+//    Map<String, Mail> responseData = new HashMap<String, Mail>();
+//    responseData.put("mail", mailSearchService.searchById(id));
+//    return new CommonResponse<Map<String, Mail>>(ApiResult.SUCCESS);
+//  }
+
   // @ApiOperation("메일 전송")
   // @PostMapping("/send")
   // public CommonResponse<Void> sendMailToUsers(SendMailDto dto) {

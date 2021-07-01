@@ -85,12 +85,6 @@ springBoot {
   mainClassName = 'com.jk.msa.email.EmailApplication'
 }
 
-bootRun {
-  if ( project.hasProperty('jvmArgs')) {
-    jvmArgs project.jvmArgs.split('\\s+')
-  }
-}
-
 test {
 	useJUnitPlatform()
 }

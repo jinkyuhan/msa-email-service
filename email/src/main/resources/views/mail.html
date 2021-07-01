@@ -101,8 +101,10 @@
         detailViewButton.setAttribute("type", "button");
         detailViewButton.className = "btn btn-primary"
         detailViewButton.onClick = () => { 
+          location.href = ""
           // TODO: go to detail view
         }
+
         const detailViewCol = document.createElement("td"); 
         detailViewCol.appendChild(detailViewButton);
         newROw.appendChild(detailViewCol);

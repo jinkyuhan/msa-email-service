@@ -58,6 +58,10 @@ public class Mail {
     this.content = content;
   }
 
+  public SimpleMailMessage toSendableMessage(String senderEmailAddress) {
+    return this.toSimpleMailMessage(senderEmailAddress);
+  }
+
   public SimpleMailMessage toSimpleMailMessage(String senderEmailAddress) {
     SimpleMailMessage message = new SimpleMailMessage();
     message.setFrom(senderEmailAddress);

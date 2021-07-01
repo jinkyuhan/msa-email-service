@@ -24,13 +24,10 @@ public class MailSendService {
   @Autowired
   private MailLauncher mailLauncher;
 
-  public void sendMails(SendMailDto mailDto) {
-    List<Account> receiverAccounts = accountRepository.findByUserIdIn(mailDto.getReceiverUserIds());
-
-    Mail mailToSend = new Mail(mailDto.getContent());
-
-  }
-
-  publc
+//  public void sendMails(SendMailDto mailDto) {
+//    List<Account> receiverAccounts = accountRepository.findByUserIdIn(mailDto.getReceiverUserIds());
+//
+//    Mail mailToSend = new Mail(mailDto.getContent());
+//  }
 
 }

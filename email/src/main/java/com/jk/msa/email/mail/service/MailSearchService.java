@@ -36,6 +36,10 @@ public class MailSearchService {
     }
   }
 
+  public Mail searchById(String id) {
+    return mailRepository.findById(id).orElse(null);
+  }
+
   public List<Mail> searchWithPagination(SearchOptionDto searchOption, PageRequest pageRequest) {
     String queryInput = Optional.ofNullable(searchOption.getQuery()).orElse("");
     if (queryInput.isBlank()) {
