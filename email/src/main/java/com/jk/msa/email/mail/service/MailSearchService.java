@@ -28,9 +28,9 @@ public class MailSearchService {
       case "receiverId":
         return mailRepository.findByReceiverId(queryInput);
       case "title":
-        return mailRepository.findByContentTitleContaining(queryInput);
+        return mailRepository.findByTitleContaining(queryInput);
       case "body":
-        return mailRepository.findByContentBodyContaining(queryInput);
+        return mailRepository.findByBodyContaining(queryInput);
       default:
         throw new RequestFailException(ApiResult.BAD_PARAMETER);
     }
@@ -49,9 +49,9 @@ public class MailSearchService {
       case "receiverId":
         return mailRepository.findByReceiverId(queryInput, pageRequest).toList();
       case "title":
-        return mailRepository.findByContentTitleContaining(queryInput, pageRequest).toList();
+        return mailRepository.findByTitleContaining(queryInput, pageRequest).toList();
       case "body":
-        return mailRepository.findByContentBodyContaining(queryInput, pageRequest).toList();
+        return mailRepository.findByBodyContaining(queryInput, pageRequest).toList();
       default:
         throw new RequestFailException(ApiResult.BAD_PARAMETER);
     }

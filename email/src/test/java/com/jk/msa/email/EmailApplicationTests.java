@@ -24,10 +24,10 @@ class EmailApplicationTests {
 	void configLoadsTest() {
 		System.out.println("service config loads...");
 		System.out.println("service.name: " + serviceConfig.getServiceName());
-		System.out.println("tableName config loads ..."); 
+		System.out.println("[ tableName configs ]");
 		System.out.println("service.tableName.account: " + serviceConfig.getAccountTableName());
 		System.out.println("service.tableName.mail: " + serviceConfig.getMailTableName());
-		System.out.println("mail config loads ..."); 
+		System.out.println("[ mail config loads ]");
 		System.out.println("service.mail.senderAddress: " + serviceConfig.getSenderAddress());
 		System.out.println("service.mail.authCode.ttl: " + serviceConfig.getAuthCodeTTLMinutes());
 		System.out.println("service.mail.authCode.length: " + serviceConfig.getAuthCodeLength());

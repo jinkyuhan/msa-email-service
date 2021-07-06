@@ -16,12 +16,12 @@ public interface MailRepository extends JpaRepository<Mail, String> {
 
   public Page<Mail> findByReceiverId(String senderId, Pageable pageable);
 
-  public List<Mail> findByContentTitleContaining(String titleQuery);
+  public List<Mail> findByTitleContaining(String titleQuery);
 
-  public Page<Mail> findByContentTitleContaining(String titleQuery, Pageable pageable);
+  public Page<Mail> findByTitleContaining(String titleQuery, Pageable pageable);
 
-  public List<Mail> findByContentBodyContaining(String bodyQuery);
+  public List<Mail> findByBodyContaining(String bodyQuery);
 
-  public Page<Mail> findByContentBodyContaining(String bodyQuery, Pageable pageable);
+  public Page<Mail> findByBodyContaining(String bodyQuery, Pageable pageable);
 
 }

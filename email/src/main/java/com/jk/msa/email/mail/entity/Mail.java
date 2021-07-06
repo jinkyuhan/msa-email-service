@@ -38,9 +38,11 @@ public class Mail {
   @JoinColumn(name = "receiver_id")
   private Account receiver;
 
-  @Embedded
   @Column
-  private MailContent content;
+  private String title;
+
+  @Column
+  private String body;
 
   @Column(name = "tag_1")
   private String tag1;
@@ -52,29 +54,30 @@ public class Mail {
   @Column(name = "created_time")
   private LocalDateTime createTime;
 
-  public Mail(Account receiver, MailContent content) {
+  public Mail(Account receiver, String title, String body) {
     this.id = UUID.randomUUID().toString();
     this.receiver = receiver;
-    this.content = content;
+    this.title = title;
+    this.body = body;
   }
 
-  public SimpleMailMessage toSendableMessage(String senderEmailAddress) {
-    return this.toSimpleMailMessage(senderEmailAddress);
+  public boolean hasHtmlBody() {
+    return true;
   }
 
   public SimpleMailMessage toSimpleMailMessage(String senderEmailAddress) {
     SimpleMailMessage message = new SimpleMailMessage();
     message.setFrom(senderEmailAddress);
     message.setTo(this.getReceiver().getMailAddress());
-    message.setSubject(this.getContent().getTitle());
-    message.setText(this.getContent().getBody());
+    message.setSubject(this.getTitle());
+    message.setText(this.getBody());
     return message;
   }
 
   public MimeMessagePreparator toMimeMessagePreparator(String senderEmailAddress, boolean isHTML) {
     String receiverMailAddress = this.getReceiver().getMailAddress();
-    String mailTitle = this.getContent().getTitle();
-    String mailBody = this.getContent().getBody();
+    String mailTitle = this.getTitle();
+    String mailBody = this.getBody();
     MimeMessagePreparator preparator = new MimeMessagePreparator() {
       @Override
       public void prepare(MimeMessage mimeMessage) throws MessagingException {
