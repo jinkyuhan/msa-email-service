@@ -19,148 +19,155 @@
 					</tr>
 				</thead>
 				<tbody id="account-list">
+					<tr th:each="account : ${accountList}">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<script>
+<!--		<script>-->
 
-			window.onload = init;
+<!--			window.onload = init;-->
 
-			function init() {
-				clearTable();
-				fetchTable({
-					pageNum: 0,
-					perPage: 10,
-				});
-			}
-			
-			async function fetchTable(params) {
-				const response = (await searchAccountsAsync(params));
-				if (response.resultCode === "00" ) {
-					response.data.accounts.forEach(account => {
-						document.getElementById("account-list")
-							.appendChild(createAccountRow(account));
-					})
-				}
-			}
+<!--			function init() {-->
+<!--				clearTable();-->
+<!--				fetchTable({-->
+<!--					pageNum: 0,-->
+<!--					perPage: 10,-->
+<!--				});-->
+<!--			}-->
+<!--			-->
+<!--			async function fetchTable(params) {-->
+<!--				const response = (await searchAccountsAsync(params));-->
+<!--				if (response.resultCode === "00" ) {-->
+<!--					response.data.accounts.forEach(account => {-->
+<!--						document.getElementById("account-list")-->
+<!--							.appendChild(createAccountRow(account));-->
+<!--					})-->
+<!--				}-->
+<!--			}-->
 
-			function clearTable() {
-				const table = document.getElementById("account-list");
-				while(table.hasChildNodes()) {
-					table.removeChild(table.firstChild);
-				}
-			};
+<!--			function clearTable() {-->
+<!--				const table = document.getElementById("account-list");-->
+<!--				while(table.hasChildNodes()) {-->
+<!--					table.removeChild(table.firstChild);-->
+<!--				}-->
+<!--			};-->
 
-			function createAccountRow(account) {
-				const newRow = document.createElement("tr");
-				newRow.setAttribute("id", `account-${account.id}`)
+<!--			function createAccountRow(account) {-->
+<!--				const newRow = document.createElement("tr");-->
+<!--				newRow.setAttribute("id", `account-${account.id}`)-->
 
-				const idCol = document.createElement("td");
-				idCol.textContent = account.id;
-				idCol.className = "account-id"
-				idCol.setAttribute("value", account.id);
+<!--				const idCol = document.createElement("td");-->
+<!--				idCol.textContent = account.id;-->
+<!--				idCol.className = "account-id"-->
+<!--				idCol.setAttribute("value", account.id);-->
 
-				const userIdCol = document.createElement("td");
-				userIdCol.textContent = account.userId;
-				userIdCol.className = "user-id"
-				userIdCol.setAttribute("value", account.userId);
+<!--				const userIdCol = document.createElement("td");-->
+<!--				userIdCol.textContent = account.userId;-->
+<!--				userIdCol.className = "user-id"-->
+<!--				userIdCol.setAttribute("value", account.userId);-->
 
-				const addressCol = document.createElement("td");
-				addressCol.textContent = account.mailAddress;
-				addressCol.className = "email-address"
-				addressCol.setAttribute("value", account.mailAddress);
+<!--				const addressCol = document.createElement("td");-->
+<!--				addressCol.textContent = account.mailAddress;-->
+<!--				addressCol.className = "email-address"-->
+<!--				addressCol.setAttribute("value", account.mailAddress);-->
 
-				const authCodeCol = document.createElement("td");
-				authCodeCol.textContent = account.authenticationCode;
-				authCodeCol.className = "auth-code"
-				authCodeCol.setAttribute("value", account.authenticationCode);
+<!--				const authCodeCol = document.createElement("td");-->
+<!--				authCodeCol.textContent = account.authenticationCode;-->
+<!--				authCodeCol.className = "auth-code"-->
+<!--				authCodeCol.setAttribute("value", account.authenticationCode);-->
 
-				const authCodeExpiredCol = document.createElement("td");
-				authCodeExpiredCol.textContent = parseDateString(
-					new Date(account.authenticationCodeExpiredTime)
-				);
-				authCodeExpiredCol.className = "auth-code-expired"
-				authCodeExpiredCol.setAttribute("value", account.authenticationCodeExpiredTime);
+<!--				const authCodeExpiredCol = document.createElement("td");-->
+<!--				authCodeExpiredCol.textContent = parseDateString(-->
+<!--					new Date(account.authenticationCodeExpiredTime)-->
+<!--				);-->
+<!--				authCodeExpiredCol.className = "auth-code-expired"-->
+<!--				authCodeExpiredCol.setAttribute("value", account.authenticationCodeExpiredTime);-->
 
-				const lastAuthCol = document.createElement("td");
-				lastAuthCol.textContent = parseDateString(
-					new Date(account.authenticatedSuccessTime)
-				);
-				lastAuthCol.className = "last-auth";
-				lastAuthCol.setAttribute("value", account.authenticatedSuccessTime);
+<!--				const lastAuthCol = document.createElement("td");-->
+<!--				lastAuthCol.textContent = parseDateString(-->
+<!--					new Date(account.authenticatedSuccessTime)-->
+<!--				);-->
+<!--				lastAuthCol.className = "last-auth";-->
+<!--				lastAuthCol.setAttribute("value", account.authenticatedSuccessTime);-->
 
-				newRow.appendChild(idCol);
-				newRow.appendChild(userIdCol);
-				newRow.appendChild(addressCol);
-				newRow.appendChild(authCodeCol);
-				newRow.appendChild(authCodeExpiredCol);
-				newRow.appendChild(lastAuthCol);
+<!--				newRow.appendChild(idCol);-->
+<!--				newRow.appendChild(userIdCol);-->
+<!--				newRow.appendChild(addressCol);-->
+<!--				newRow.appendChild(authCodeCol);-->
+<!--				newRow.appendChild(authCodeExpiredCol);-->
+<!--				newRow.appendChild(lastAuthCol);-->
 
-				const resendButton = document.createElement("button");
-				resendButton.textContent = "재전송";
-				resendButton.setAttribute("type", "button");
-				resendButton.className = "btn btn-primary"
-				resendButton.onclick = () => { resendAuthMail(account.id) }
-				const resendCol = document.createElement("td");
-				resendCol.appendChild(resendButton);
-				newRow.appendChild(resendCol);
+<!--				const resendButton = document.createElement("button");-->
+<!--				resendButton.textContent = "재전송";-->
+<!--				resendButton.setAttribute("type", "button");-->
+<!--				resendButton.className = "btn btn-primary"-->
+<!--				resendButton.onclick = () => { resendAuthMail(account.id) }-->
+<!--				const resendCol = document.createElement("td");-->
+<!--				resendCol.appendChild(resendButton);-->
+<!--				newRow.appendChild(resendCol);-->
 
-				return newRow;
-			}
+<!--				return newRow;-->
+<!--			}-->
 
-			async function resendAuthMail(accountId) {
-				if (!confirm("인증을 위한 보안코드가 포함된 메일을 재전송 하시겠습니까?")) {
-					return;
-				}
-				let userIdElement;
-				let emailElement;
-				let authCodeElement;
-				let authCodeExpiredElement;
-				for(const child of document.getElementById(`account-${accountId}`).children){
-					if (child.className === "user-id") {
-						userIdElement = child;
-					}
-					if (child.className === "email-address") {
-						emailElement = child;
-					}
-					if (child.className === "auth-code") {
-						authCodeElement = child;
-					}
-					if (child.className === "auth-code-expired") {
-						authCodeExpiredElement = child;
-					}
-				}
-				emailElement.textContent = "...";
-				authCodeElement.textContent = "...";
-				authCodeExpiredElement.textContent = "...";
+<!--			async function resendAuthMail(accountId) {-->
+<!--				if (!confirm("인증을 위한 보안코드가 포함된 메일을 재전송 하시겠습니까?")) {-->
+<!--					return;-->
+<!--				}-->
+<!--				let userIdElement;-->
+<!--				let emailElement;-->
+<!--				let authCodeElement;-->
+<!--				let authCodeExpiredElement;-->
+<!--				for(const child of document.getElementById(`account-${accountId}`).children){-->
+<!--					if (child.className === "user-id") {-->
+<!--						userIdElement = child;-->
+<!--					}-->
+<!--					if (child.className === "email-address") {-->
+<!--						emailElement = child;-->
+<!--					}-->
+<!--					if (child.className === "auth-code") {-->
+<!--						authCodeElement = child;-->
+<!--					}-->
+<!--					if (child.className === "auth-code-expired") {-->
+<!--						authCodeExpiredElement = child;-->
+<!--					}-->
+<!--				}-->
+<!--				emailElement.textContent = "...";-->
+<!--				authCodeElement.textContent = "...";-->
+<!--				authCodeExpiredElement.textContent = "...";-->
 
-				try {
-					const response = await sendAuthMailAsync({
-						userId: userIdElement.getAttribute("value"),
-						email: emailElement.getAttribute("value"),
-					})
-				
-					if (response.resultCode !== "00") {
-						alert("재전송에 실패하였습니다"); 
-						location.reload();
-						return;
-					}
-					const updatedAccount = (await searchAccountByIdAsync(accountId)).data.account;
-					emailElement.setAttribute("value", updatedAccount.mailAddress);
-					emailElement.textContent = updatedAccount.mailAddress;
-					authCodeElement.setAttribute("value", updatedAccount.authenticationCode);
-					authCodeElement.textContent = updatedAccount.authenticationCode;
-					authCodeExpiredElement.setAttribute("value", updatedAccount.authenticationCodeExpiredTime);
-					authCodeExpiredElement.textContent = parseDateString(
-						new Date(updatedAccount.authenticationCodeExpiredTime)
-					);
-				} catch (err) {
-					console.log(err)
-					alert("재전송에 실패하였습니다"); 
-				}
-			}
+<!--				try {-->
+<!--					const response = await sendAuthMailAsync({-->
+<!--						userId: userIdElement.getAttribute("value"),-->
+<!--						email: emailElement.getAttribute("value"),-->
+<!--					})-->
+<!--				-->
+<!--					if (response.resultCode !== "00") {-->
+<!--						alert("재전송에 실패하였습니다"); -->
+<!--						location.reload();-->
+<!--						return;-->
+<!--					}-->
+<!--					const updatedAccount = (await searchAccountByIdAsync(accountId)).data.account;-->
+<!--					emailElement.setAttribute("value", updatedAccount.mailAddress);-->
+<!--					emailElement.textContent = updatedAccount.mailAddress;-->
+<!--					authCodeElement.setAttribute("value", updatedAccount.authenticationCode);-->
+<!--					authCodeElement.textContent = updatedAccount.authenticationCode;-->
+<!--					authCodeExpiredElement.setAttribute("value", updatedAccount.authenticationCodeExpiredTime);-->
+<!--					authCodeExpiredElement.textContent = parseDateString(-->
+<!--						new Date(updatedAccount.authenticationCodeExpiredTime)-->
+<!--					);-->
+<!--				} catch (err) {-->
+<!--					console.log(err)-->
+<!--					alert("재전송에 실패하였습니다"); -->
+<!--				}-->
+<!--			}-->
 
-		</script>
+<!--		</script>-->
 	</body>
 </html>

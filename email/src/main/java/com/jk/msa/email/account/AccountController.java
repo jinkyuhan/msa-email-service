@@ -46,8 +46,8 @@ public class AccountController {
       @RequestParam(name = "subject", required = false) String subject,
       @RequestParam(name = "query", required = false) String query,
       @RequestParam(name = "pageNum", required = false) Integer pageNum,
-      @RequestParam(name = "perPage", required = false) Integer perPage) {
-
+      @RequestParam(name = "perPage", required = false) Integer perPage
+  ) {
     SearchOptionDto searchOption = new SearchOptionDto(query, subject);
     Map<String, List<Account>> responseData = new HashMap<String, List<Account>>();
     if (pageNum != null && perPage != null) {
