@@ -34,12 +34,13 @@ public class AccountSearchService {
     }
   }
 
-  public List<Account> searchWithPagination(SearchOptionDto searchOption, PageRequest pageRequest) {
-    String queryInput = Optional.ofNullable(searchOption.getQuery()).orElse("");
+  public List<Account> searchWithPagination(Optional<SearchOptionDto> searchOption, PageRequest pageRequest) {
+    SearchOptionDto option = searchOption.orElseGet(SearchOptionDto::new);
+    String queryInput = Optional.ofNullable(option.getQuery()).orElse("");
     if (queryInput.isBlank()) {
       return accountRepository.findAll(pageRequest).toList();
     }
-    switch (searchOption.getSubject()) {
+    switch (option.getSubject()) {
       case "userId":
         return accountRepository.findByUserIdContaining(queryInput, pageRequest).toList();
       case "email":

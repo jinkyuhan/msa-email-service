@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/page/admin")
@@ -24,11 +25,11 @@ public class AdminPageController {
     @GetMapping("/account")
     public String renderAccountPage(
             Model model,
-            @RequestParam(name="page", required = true) int pageNum,
-            @RequestParam(name="size", required = true) int perPage
+            @RequestParam(name="page") int pageNum,
+            @RequestParam(name="size") int perPage
     ) {
         List<Account> searchedAccounts = accountSearchService.searchWithPagination(
-                null,
+                Optional.empty(),
                 PageRequest.of(pageNum, perPage)
         );
         model.addAttribute("accountList", searchedAccounts);

@@ -1,9 +1,15 @@
 package com.jk.msa.email.common;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CommonResponse<T> {
-  public String resultCode;
-  public String resultMessage;
-  public T data;
+  private String resultCode;
+  private String resultMessage;
+  private T data;
 
   public CommonResponse(ApiResult resultObject) {
     this.resultCode = resultObject.getResultCode();

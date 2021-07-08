@@ -3,6 +3,7 @@ package com.jk.msa.email.account;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.jk.msa.email.account.dto.AuthPrepareDto;
 import com.jk.msa.email.account.dto.AuthValidateDto;
@@ -49,22 +50,22 @@ public class AccountController {
       @RequestParam(name = "perPage", required = false) Integer perPage
   ) {
     SearchOptionDto searchOption = new SearchOptionDto(query, subject);
-    Map<String, List<Account>> responseData = new HashMap<String, List<Account>>();
+    Map<String, List<Account>> responseData = new HashMap<>();
     if (pageNum != null && perPage != null) {
       responseData.put("accounts",
-          accountSearchService.searchWithPagination(searchOption, PageRequest.of(pageNum, perPage)));
-      return new CommonResponse<Map<String, List<Account>>>(ApiResult.SUCCESS, responseData);
+          accountSearchService.searchWithPagination(Optional.of(searchOption), PageRequest.of(pageNum, perPage)));
+      return new CommonResponse<>(ApiResult.SUCCESS, responseData);
     }
     responseData.put("accounts", accountSearchService.search(searchOption));
-    return new CommonResponse<Map<String, List<Account>>>(ApiResult.SUCCESS, responseData);
+    return new CommonResponse<>(ApiResult.SUCCESS, responseData);
   }
 
   @GetMapping(value = "/{id}")
   @ApiOperation(value = "계정 id로 조회")
   public CommonResponse<Map<String, Account>> searchById(@PathVariable("id") String accountId) {
-    Map<String, Account> responseData = new HashMap<String, Account>();
+    Map<String, Account> responseData = new HashMap<>();
     responseData.put("account", accountSearchService.searchByAccountId(accountId));
-    return new CommonResponse<Map<String, Account>>(ApiResult.SUCCESS, responseData);
+    return new CommonResponse<>(ApiResult.SUCCESS, responseData);
   }
 
   @GetMapping(value = "/is-authenticated")
@@ -74,9 +75,9 @@ public class AccountController {
     Account queryAccount = accountRepository.findByUserIdAndMailAddress(userId, emailAddress)
         .orElseThrow(() -> new RequestFailException(ApiResult.NOT_EXIST_ACCOUNT));
 
-    Map<String, Boolean> isAuthResult = new HashMap<String, Boolean>();
+    Map<String, Boolean> isAuthResult = new HashMap<>();
     isAuthResult.put("isAuthenticated", queryAccount.isAuthenticated());
-    return new CommonResponse<Map<String, Boolean>>(ApiResult.SUCCESS, isAuthResult);
+    return new CommonResponse<>(ApiResult.SUCCESS, isAuthResult);
   }
 
   @PostMapping(value = "/prepare-authentication")
@@ -91,7 +92,7 @@ public class AccountController {
     accountToAuthenticate.setTag(dto.getTag());
     accountAuthService.prepareAndSendAuthentication(accountToAuthenticate);
 
-    return new CommonResponse<Void>(ApiResult.SUCCESS);
+    return new CommonResponse<>(ApiResult.SUCCESS);
   }
 
   @PostMapping(value = "/validate-authentication")
@@ -106,6 +107,6 @@ public class AccountController {
 
     accountRepository.save(accountToValidate);
 
-    return new CommonResponse<Void>(ApiResult.SUCCESS);
+    return new CommonResponse<>(ApiResult.SUCCESS);
   }
 }
