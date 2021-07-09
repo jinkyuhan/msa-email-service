@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html>
-	<th:block th:replace="fragments/head.html :: head(subTitle='계정관리')"></th:block>
-	<body>
-		<th:block th:replace="fragments/navbar.html
+<th:block th:replace="fragments/head.html :: head(subTitle='계정관리')"></th:block>
+<body>
+<th:block th:replace="fragments/navbar.html
 			:: navbar(account='active', mail='inactive')"></th:block>
-		<div class="container">
-			<button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="init()"> 새로고침</button>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">유저ID</th>
-						<th scope="col">메일주소</th>
-						<th scope="col">최근인증코드</th>
-						<th scope="col">인증코드만료기한</th>
-						<th scope="col">최근인증일시</th>
-						<th scope="col">인증코드전송</th>
-					</tr>
-				</thead>
-				<tbody id="account-list">
-					<tr th:each="account : ${accountList}">
-						<td th:text="${account.id}"></td>
-						<td th:text="account.userId"></td>
-						<td th:text="account.mailAddress"></td>
-						<td th:text="account.authenticationCode"></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+<div class="container">
+    <button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="init()"> 새로고침</button>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">유저ID</th>
+            <th scope="col">메일주소</th>
+            <th scope="col">최근인증코드</th>
+            <th scope="col">인증코드만료기한</th>
+            <th scope="col">최근인증일시</th>
+            <th scope="col">인증코드전송</th>
+        </tr>
+        </thead>
+        <tbody id="account-list">
+        <tr th:each="account : ${accountList}" th:with="formId = ${#strings.concat('account-form-', account.id)} ">
+            <td th:text="${account.id}">
+            </td>
+            <td th:text="${account.userId}" th:form="${formId}" th:value="${account.userId}"></td>
+            <td th:text="${account.mailAddress}" th:form="${formId}" th:value="${account.mailAddress}"></td>
+            <td th:text="${account.authenticationCode}"></td>
+            <td></td>
+            <td></td>
+            <!--						<td th:text="${#temporals.format(account.authenticationCodeExpiredTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+            <!--						<td th:text="${#temporals.format(account.authenticationSuccessTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+            <td>
+                <form th:id="${#strings.concat('account-form-', account.id)}" action="/admin/action/account/send-auth" method="post">
+                </form>
+                <button type="submit" class="btn btn-primary" th:form="${formId}">재전송</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <!--		<script>-->
 
@@ -119,9 +126,9 @@
 <!--			}-->
 
 <!--			async function resendAuthMail(accountId) {-->
-<!--				if (!confirm("인증을 위한 보안코드가 포함된 메일을 재전송 하시겠습니까?")) {-->
-<!--					return;-->
-<!--				}-->
+<!--if (!confirm("인증을 위한 보안코드가 포함된 메일을 재전송 하시겠습니까?")) {-->
+<!--return;-->
+<!--}-->
 <!--				let userIdElement;-->
 <!--				let emailElement;-->
 <!--				let authCodeElement;-->
@@ -171,5 +178,5 @@
 <!--			}-->
 
 <!--		</script>-->
-	</body>
+</body>
 </html>

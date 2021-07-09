@@ -3,7 +3,6 @@ package com.jk.msa.email;
 
 import com.jk.msa.email.account.entity.Account;
 import com.jk.msa.email.account.service.AccountSearchService;
-import com.jk.msa.email.common.SearchOptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/page/admin")
+@RequestMapping(value = "/admin/page")
 public class AdminPageController {
 
     @Autowired

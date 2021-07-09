@@ -22,7 +22,7 @@ spring:
             enabled: true
     datasource:
         platform: postgres
-        url: jdbc:postgresql://localhost:5432/email
+        url: jdbc:postgresql://localhost:54321/email
         hikari:
           maximum-pool-size: 4
         username: admin

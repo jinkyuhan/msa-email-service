@@ -55,7 +55,7 @@ class EmailApplicationTests {
         AuthValidateDto requestBody = new AuthValidateDto();
         requestBody.setEmailAddress("gkswlsrb95@gmail.com");
         requestBody.setUserId("0000-0000-000000");
-        requestBody.setAuthCode("Axt0a1");
+        requestBody.setAuthCode("j5laK7");
         assertEquals(
                 accountController.validateAccountAuthentication(requestBody).getResultCode(),
                 ApiResult.SUCCESS.getResultCode()
