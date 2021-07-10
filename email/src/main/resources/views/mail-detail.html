@@ -1,0 +1,17 @@
+<html>
+<body>
+<th:block th:replace="fragments/head.html :: head(subTitle='메일상세')"></th:block>
+<th:block th:replace="fragments/navbar.html :: navbar(account='inactive', mail='active')"></th:block>
+<div class="container" style="margin-top: 20px">
+    <table>
+        <tr>
+            <h1 th:text="${mail.title}"></h1>
+        </tr>
+        <tr>
+            <p th:text="${mail.body}"></p>
+        </tr>
+    </table>
+</div>
+</body>
+
+</html>

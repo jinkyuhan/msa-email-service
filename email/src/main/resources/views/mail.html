@@ -5,7 +5,7 @@
 <th:block th:replace="fragments/navbar.html
 			:: navbar(account='inactive', mail='active')"></th:block>
 <div class="container">
-    <button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="init()">새로고침</button>
+    <button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="location.reload()">새로고침</button>
     <table class="table">
         <thead>
         <tr>
@@ -29,101 +29,11 @@
             <td class="tag2" th:text="${mail.tag2}" th:value="${mail.tag2}"></td>
             <td class="createTime" th:text="${#temporals.format(mail.createTime, 'yyyy-MM-dd HH:mm:ss')}" th:value="${mail.createTime}"></td>
             <td>
-                <button class="btn btn-primary" th:onClick="location.href='/admin/page/mail/?id=' + [[${mail.id}]]">상세보기</button>
+                <button class="btn btn-primary" th:onClick="location.href='/admin/page/mail/' + [[${mail.id}]]">상세보기</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<!--		<script>-->
-<!--			function init() {-->
-<!--				clearTable();-->
-<!--        fetchTable({-->
-<!--          pageNum: 0,-->
-<!--          perPage: 10-->
-<!--        });-->
-<!--			}-->
-<!--			-->
-
-<!--			function clearTable() {-->
-<!--				const table = document.getElementById("mail-list");-->
-<!--				while(table.hasChildNodes) {-->
-<!--					table.removeChild(table.firstChild);-->
-<!--				}-->
-<!--			}-->
-
-<!--			function fetchTable(params) {-->
-<!--				const response = (await searchMailAsync(params));-->
-<!--				if (response.resultCode === "00" ) {-->
-<!--          response.data.mails.forEach((mail) => { -->
-<!--            document.getElementById("mail-list")-->
-<!--              .appendChild(createMailRow());-->
-<!--          });-->
-<!--        }-->
-<!--			}-->
-
-<!--      function createMailRow(mail) {-->
-<!--        const newRow = document.createElement("tr");-->
-<!--        newRow.setAttribute("id", `mail-${mail.id}`);-->
-
-<!--        const idCol = document.createElement("td");-->
-<!--        idCol.textContent = mail.id;-->
-<!--        idCol.className = "mail-id";-->
-<!--        idCol.setAttribute("value", mail.id);-->
-<!--        newRow.appendChild(idCol);-->
-
-<!--        const receiverIdCol = document.createElement("td");-->
-<!--        receiverIdCol.textContent = mail.receiver.id;-->
-<!--        receiverIdCol.className = "receiver-id";-->
-<!--        receiverIdCol.setAttribute("value", mail.receiver.id);-->
-<!--        newRow.appendChild(receiverIdCol);-->
-
-<!--        const receiverAddressCol = document.createElement("td");-->
-<!--        receiverAddressCol.textContent = mail.receiver.mailAddress;-->
-<!--        receiverAddressCol.className = "receiver-address"-->
-<!--        receiverAddressCol.setAttribute("value", mail.receiver.mailAddress);-->
-<!--        newRow.appendChild(receiverAddressCol);-->
-<!--        -->
-<!--        const titleCol = document.createElement("td");-->
-<!--        titleCol.textContent = mail.content.title.slice(0, 8) + "...";-->
-<!--        titleCol.className = "mail-title";-->
-<!--        titleCol.setAttribute("value", mail.content.title);-->
-<!--        newRow.appendChild(titleCol);-->
-
-<!--        const tag1Col = document.createElement("td");-->
-<!--        tag1Col.textContent = mail.tag1;-->
-<!--        tag1Col.className = "mail-tag1";-->
-<!--        tag1Col.setAttribute("value", mail.tag1);-->
-<!--        newRow.appendChild(tag1Col);-->
-
-<!--        const tag2Col = document.createElement("td");-->
-<!--        tag2Col.textContent = mail.tag2;-->
-<!--        tag2Col.className = "mail-tag2";-->
-<!--        tag2Col.setAttribute("value", mail.tag2);-->
-<!--        newRow.appendChild(tag2Col);-->
-
-<!--        const sendingTimeCol = document.createElement("td");-->
-<!--        sendingTimeCol.textContent = parseDateString(new Date(mail.createTime));-->
-<!--        sendingTimeCol.className = "mail-sending-time"-->
-<!--        sendingTimeCol.setAttribute("value", mail.createTime);-->
-<!--        newRow.appendChild(sendingTimeCol);-->
-<!--        -->
-<!--        const detailViewButton = document.createElement("button");-->
-<!--        detailViewButton.textContent = "내용 보기";-->
-<!--        detailViewButton.setAttribute("type", "button");-->
-<!--        detailViewButton.className = "btn btn-primary"-->
-<!--        detailViewButton.onClick = () => { -->
-<!--          location.href = ""-->
-<!--          // TODO: go to detail view-->
-<!--        }-->
-
-<!--        const detailViewCol = document.createElement("td"); -->
-<!--        detailViewCol.appendChild(detailViewButton);-->
-<!--        newRow.appendChild(detailViewCol);-->
-
-<!--        return newRow;-->
-<!--      }-->
-
-<!--		</script>-->
 </body>
 </html>

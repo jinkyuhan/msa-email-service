@@ -8,10 +8,10 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a th:class="${#strings.concat('nav-link ', account)}" href="account">계정관리</a>
+						<a th:class="${#strings.concat('nav-link ', account)}" href="/admin/page/account?page=1&size=10">계정관리</a>
 					</li>
 					<li class="nav-item">
-						<a th:class="${#strings.concat('nav-link ', mail)}" href="mail">메일관리</a>
+						<a th:class="${#strings.concat('nav-link ', mail)}" href="/admin/page/mail?page=1&size=10">메일관리</a>
 					</li>
 				</ul>
 			</div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,11 @@ public class AdminPageController {
 
     @Autowired
     private MailSearchService mailSearchService;
+
+    @GetMapping()
+    public RedirectView renderIndex() {
+        return new RedirectView("/admin/page/account?page=1&size=10");
+    }
 
     @GetMapping("/account")
     public String renderAccountPage(
@@ -61,8 +67,7 @@ public class AdminPageController {
             @PathVariable(name="id") String mailId
     ) {
         Mail foundMail = mailSearchService.searchById(mailId);
-
-        model.addAttribute("mail")
-
+        model.addAttribute("mail", foundMail);
+        return "mail-detail";
     }
 }

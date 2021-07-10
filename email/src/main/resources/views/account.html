@@ -5,7 +5,7 @@
 <th:block th:replace="fragments/navbar.html
 			:: navbar(account='active', mail='inactive')"></th:block>
 <div class="container">
-    <button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="init()"> 새로고침</button>
+    <button type="button" class="btn btn-secondary" style="margin-top: 10px" onclick="location.reload()"> 새로고침</button>
     <table class="table">
         <thead>
         <tr>
@@ -42,7 +42,6 @@
             userId: row.getElementsByClassName('accountUserId').item(0).getAttribute("value"),
             email: row.getElementsByClassName('accountMailAddress').item(0).getAttribute("value")
         });
-        console.log(response);
         if (response.resultCode && response.resultCode === "00") {
             alert("인증메일 전송 성공");
         } else {

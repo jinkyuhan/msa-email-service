@@ -11,20 +11,20 @@ services:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=email
 
-  # email:
-  #   image: jinkyuhan/msa-email-service
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     target: development
-  #   ports:
-  #     - 8080:8080
-  #     - 5080:5080
-  #     - 35729:35729
-  #   volumes:
-  #     - ./email:/email-app
-  #   depends_on:
-  #     - db
+   email:
+     image: jinkyuhan/msa-email-service
+     build:
+       context: .
+       dockerfile: Dockerfile
+       target: development
+     ports:
+       - 8080:8080
+       - 5080:5080
+       - 35729:35729
+     volumes:
+       - ./email:/email-app
+     depends_on:
+       - db
 
 volumes:
   pg-dump:

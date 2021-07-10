@@ -41,25 +41,25 @@ public class MailController {
         Map<String, List<Mail>> responseData = new HashMap<String, List<Mail>>();
         if (pageNum != null && perPage != null) {
             responseData.put("mails", mailSearchService.searchWithPagination(Optional.of(searchOption), PageRequest.of(pageNum, perPage)));
-            return new CommonResponse<Map<String, List<Mail>>>(ApiResult.SUCCESS, responseData);
+            return new CommonResponse<>(ApiResult.SUCCESS, responseData);
         }
 
         responseData.put("mails", mailSearchService.search(searchOption));
-        return new CommonResponse<Map<String, List<Mail>>>(ApiResult.SUCCESS, responseData);
+        return new CommonResponse<>(ApiResult.SUCCESS, responseData);
     }
 
-//  @ApiOperation("메일 상세 검색")
-//  @GetMapping("/")
-//  public CommonResponse<Map<String, Mail>> searchMailById(@RequestParam(name = "id", required = true) String id) {
-//    Map<String, Mail> responseData = new HashMap<String, Mail>();
-//    responseData.put("mail", mailSearchService.searchById(id));
-//    return new CommonResponse<Map<String, Mail>>(ApiResult.SUCCESS);
-//  }
+    @ApiOperation("메일 상세 검색")
+    @GetMapping("/{id}")
+    public CommonResponse<Map<String, Mail>> searchMailById(@PathVariable("id") String id) {
+        Map<String, Mail> responseData = new HashMap<>();
+        responseData.put("mail", mailSearchService.searchById(id));
+        return new CommonResponse<>(ApiResult.SUCCESS);
+    }
 
     @ApiOperation("메일 전송")
     @PostMapping("/send")
     public CommonResponse<Void> sendMailToUsers(SendMailDto dto) {
         mailSendService.sendMail(dto);
-        return new CommonResponse<Void>(ApiResult.SUCCESS);
+        return new CommonResponse<>(ApiResult.SUCCESS);
     }
 }
