@@ -39,10 +39,14 @@ async function sendAuthMailAsync(params) {
       headers: {
         'Content-Type': 'application/json',
       },
+      // body: {
+      //     userId: params.userId,
+      //     emailAddress: params.email
+      // }
       body: JSON.stringify({
         userId: params.userId,
         emailAddress: params.email,
-      }),
+      })
     })
   ).json();
 }

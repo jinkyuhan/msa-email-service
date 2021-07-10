@@ -6,6 +6,8 @@ import com.jk.msa.email.account.dto.AuthValidateDto;
 import com.jk.msa.email.common.ApiResult;
 import com.jk.msa.email.config.ServiceConfig;
 
+import com.jk.msa.email.mail.MailController;
+import com.jk.msa.email.mail.dto.SendMailDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,9 @@ class EmailApplicationTests {
 
     @Autowired
     AccountController accountController;
+
+    @Autowired
+    MailController mailController;
 
 
     @Test
@@ -42,11 +47,11 @@ class EmailApplicationTests {
     @Test
     void addAccountTest() {
         AuthPrepareDto requestBody = new AuthPrepareDto();
-        requestBody.setUserId("0000-0000-000000");
-        requestBody.setEmailAddress("gkswlsrb95@gmail.com");
+        requestBody.setUserId("1111-1111-111111");
+        requestBody.setEmailAddress("hjg0911@naver.com");
         assertEquals(
-                accountController.prepareAccountAuthentication(requestBody).getResultCode(),
-                ApiResult.SUCCESS.getResultCode()
+                ApiResult.SUCCESS.getResultCode(),
+                accountController.prepareAccountAuthentication(requestBody).getResultCode()
         );
     }
 
@@ -57,8 +62,21 @@ class EmailApplicationTests {
         requestBody.setUserId("0000-0000-000000");
         requestBody.setAuthCode("j5laK7");
         assertEquals(
-                accountController.validateAccountAuthentication(requestBody).getResultCode(),
-                ApiResult.SUCCESS.getResultCode()
+                ApiResult.SUCCESS.getResultCode(),
+                accountController.validateAccountAuthentication(requestBody).getResultCode()
+        );
+    }
+
+    @Test
+    void sendMailToUserTest() {
+        SendMailDto requestBody = new SendMailDto(
+                "title of mail",
+                "content body",
+                new String[]{"0000-0000-000000"}
+        );
+        assertEquals(
+                ApiResult.SUCCESS.getResultCode(),
+                mailController.sendMailToUsers(requestBody).getResultCode()
         );
     }
 }

@@ -48,7 +48,7 @@ public class MailSendService {
         this.sendMails(mailsToSend);
     }
 
-    public void sendInstantMail(SendMailDto sendMailDto) {
+    public void sendMailWithoutSave(SendMailDto sendMailDto) {
         List<Account> receiverAccounts = accountRepository.findByUserIdIn(sendMailDto.getReceiverUserIds());
         this.sendMails(receiverAccounts
                 .stream()
@@ -60,7 +60,6 @@ public class MailSendService {
                 .toArray(Mail[]:: new)
         );
     }
-
 
     private void sendMails(Mail... mailsToSend) throws RuntimeException {
 

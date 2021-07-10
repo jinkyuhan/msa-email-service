@@ -5,13 +5,7 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.jk.msa.email.account.entity.Account;
 
@@ -91,4 +85,8 @@ public class Mail {
     return preparator;
   }
 
+  @PrePersist
+  private void createdAt() {
+    this.createTime = LocalDateTime.now();
+  }
 }

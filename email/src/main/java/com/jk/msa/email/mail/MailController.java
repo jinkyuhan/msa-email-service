@@ -3,6 +3,7 @@ package com.jk.msa.email.mail;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.jk.msa.email.common.ApiResult;
 import com.jk.msa.email.common.CommonResponse;
@@ -39,7 +40,7 @@ public class MailController {
         SearchOptionDto searchOption = new SearchOptionDto(query, subject);
         Map<String, List<Mail>> responseData = new HashMap<String, List<Mail>>();
         if (pageNum != null && perPage != null) {
-            responseData.put("mails", mailSearchService.searchWithPagination(searchOption, PageRequest.of(pageNum, perPage)));
+            responseData.put("mails", mailSearchService.searchWithPagination(Optional.of(searchOption), PageRequest.of(pageNum, perPage)));
             return new CommonResponse<Map<String, List<Mail>>>(ApiResult.SUCCESS, responseData);
         }
 
@@ -59,6 +60,6 @@ public class MailController {
     @PostMapping("/send")
     public CommonResponse<Void> sendMailToUsers(SendMailDto dto) {
         mailSendService.sendMail(dto);
-        return new CommonResponse<Void>(ApiResult.PARTIAL_SUCCESS);
+        return new CommonResponse<Void>(ApiResult.SUCCESS);
     }
 }

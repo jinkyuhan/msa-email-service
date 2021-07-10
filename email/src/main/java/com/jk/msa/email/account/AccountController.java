@@ -18,6 +18,7 @@ import com.jk.msa.email.common.exception.RequestFailException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/v1/account")
+@Validated
 public class AccountController {
 
   @Autowired
@@ -53,7 +57,7 @@ public class AccountController {
     Map<String, List<Account>> responseData = new HashMap<>();
     if (pageNum != null && perPage != null) {
       responseData.put("accounts",
-          accountSearchService.searchWithPagination(Optional.of(searchOption), PageRequest.of(pageNum, perPage)));
+          accountSearchService.searchWithPagination(Optional.of(searchOption), PageRequest.of(pageNum - 1, perPage)));
       return new CommonResponse<>(ApiResult.SUCCESS, responseData);
     }
     responseData.put("accounts", accountSearchService.search(searchOption));
@@ -82,7 +86,7 @@ public class AccountController {
 
   @PostMapping(value = "/prepare-authentication")
   @ApiOperation(value = "새로운 계정 등록 및 인증 메일 전송")
-  public CommonResponse<Void> prepareAccountAuthentication(@RequestBody final AuthPrepareDto dto) {
+  public CommonResponse<Void> prepareAccountAuthentication(@Valid @RequestBody final AuthPrepareDto dto) {
     Account accountToAuthenticate = accountRepository.findByUserIdAndMailAddress(dto.getUserId(), dto.getEmailAddress())
         .orElse(null);
 

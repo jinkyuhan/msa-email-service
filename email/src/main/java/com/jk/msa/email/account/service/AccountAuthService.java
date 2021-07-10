@@ -35,6 +35,6 @@ public class AccountAuthService {
         String title = "[" + serviceConfig.getServiceName() + "] 서비스 본인인증 확인용 메일입니다.";
         String body = "인증 확인 창에서 " + account.getAuthenticationCode() + "를 입력해주세요.";
         // 인증 메일은 DB에 저장 안함
-        mailSendService.sendInstantMail(new SendMailDto(title, body, new String[]{account.getUserId()}));
+        mailSendService.sendMailWithoutSave(new SendMailDto(title, body, new String[]{account.getUserId()}));
     }
 }

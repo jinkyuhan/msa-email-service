@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.0-SNAPSHOT'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.5.0-SNAPSHOT'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
 group = 'com.jk.msa'
@@ -9,82 +9,84 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-  umlDoclet
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    umlDoclet
 }
 
 repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
-  // Spring boot Web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Spring boot Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-  // Spring boot Dev tools
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-  
-  // Spring boot Test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // Spring boot Dev tools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-  // Spring boot mail
-  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.0'
- 
-  // Spring boot JPA
-  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.3'
+    // Spring boot Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// Spring boot thymeleaf
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.5.1'
+    // Spring boot mail
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.0'
 
-  // Lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-  
-  // PostgreSQL JDBC Driver
-  // https://mvnrepository.com/artifact/org.postgresql/postgresql
-  implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+    // Spring boot JPA
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.3'
 
-  // // https://mvnrepository.com/artifact/com.h2database/h2
-  // runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
+    // Spring boot thymeleaf
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.5.1'
 
-  // Uml generation for javadoc
-  umlDoclet "nl.talsmasoftware:umldoclet:2.0.12"
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-  // springfox-swagger2, springfox-swagger-ui
-  implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-  implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    // PostgreSQL JDBC Driver
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
-  
-  // sl4j for logging
-  // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
-  implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.30'
+    // // https://mvnrepository.com/artifact/com.h2database/h2
+    // runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
 
-  // logback for logging
-  // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
-  implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    // Uml generation for javadoc
+    umlDoclet "nl.talsmasoftware:umldoclet:2.0.12"
 
+    // springfox-swagger2, springfox-swagger-ui
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+
+    // sl4j for logging
+    // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
+    implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.30'
+
+    // logback for logging
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
 }
 
 javadoc {
-  source = sourceSets.main.allJava
-  options.docletpath = configurations.umlDoclet.files.asType(List)
-  options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
-  // options.addStringOption("--uml-image-directory", "./docs")
-	options.addStringOption("encoding", "UTF-8")
-	options.addStringOption("charSet", "UTF-8")
+    source = sourceSets.main.allJava
+    options.docletpath = configurations.umlDoclet.files.asType(List)
+    options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+    // options.addStringOption("--uml-image-directory", "./docs")
+    options.addStringOption("encoding", "UTF-8")
+    options.addStringOption("charSet", "UTF-8")
 }
 
-springBoot { 
-  mainClassName = 'com.jk.msa.email.EmailApplication'
+springBoot {
+    mainClassName = 'com.jk.msa.email.EmailApplication'
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
