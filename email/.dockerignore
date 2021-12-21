@@ -26,5 +26,6 @@
 build
 bin
 .gradle
+application-env.example.yml
 
 README.md

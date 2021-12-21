@@ -7,18 +7,18 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 public class AppController {
 
-  @GetMapping(value = "/health-check")
-  public String checkHealth() {
-    return "I'm alive";
-  }
+    @GetMapping(value = "/health-check")
+    public String checkHealth() {
+        return "I'm alive";
+    }
 
-	@GetMapping(value = "/api-docs")
-	public RedirectView redirectApiDocs() {
-		return new RedirectView("swagger-ui.html");
-	}
+    @GetMapping(value = "/api-docs")
+    public RedirectView redirectApiDocs() {
+        return new RedirectView("swagger-ui.html");
+    }
 
-	@GetMapping(value = "/dev-db")
-	public RedirectView redirectDevDB() {
-		return new RedirectView("h2-console");
-	}
+    @GetMapping(value = "/dev-db")
+    public RedirectView redirectDevDB() {
+        return new RedirectView("h2-console");
+    }
 }

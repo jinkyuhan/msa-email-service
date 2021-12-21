@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 services:
   db:
     image: postgres
@@ -11,20 +11,34 @@ services:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=email
 
-   email:
-     image: jinkyuhan/msa-email-service
-     build:
-       context: .
-       dockerfile: Dockerfile
-       target: development
-     ports:
-       - 8080:8080
-       - 5080:5080
-       - 35729:35729
-     volumes:
-       - ./email:/email-app
-     depends_on:
-       - db
+  email:
+    image: jinkyuhan/msa-email-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - 8080:8080
+      - 5080:5080
+      - 35729:35729
+    environment:
+      - SPRING_DEVTOOL_REMOTE_SECRET=remotesecret
+      - SPRING_DATASOURCE_PLATFORM=postgresql
+      - SPRING_DATASOURCE_HOST=db
+      - SPRING_DATASOURCE_PORT=5432
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_DEFAULT_SCHEMA=public
+      - GMAIL_USERNAME=gkswlsrb95@gmail.com
+      - GMAIL_PASSWORD=Googl8955^
+      - GMAIL_SMTP_PORT=587
+      - SERVICE_MAIL_AUTHCODE_TTL=30
+      - SERVICE_MAIL_AUTHCODE_LENGTH=6
+      - SERVICE_MAIL_SENDER_ADDRESS=gkswlsrb95@gmail.com
+      - TABLENAME_MAIL=mail
+      - TABLENAME_ACCOUNT=account
+    depends_on:
+      - db
 
 volumes:
   pg-dump:

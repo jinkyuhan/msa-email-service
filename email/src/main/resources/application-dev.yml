@@ -17,23 +17,23 @@ spring:
         remote:
             restart:
                 enabled: true
-            secret: remotesecret
+            secret: ${SPRING_DEVTOOL_REMOTE_SECRET}
         restart:
             enabled: true
     datasource:
-        platform: postgres
-        url: jdbc:postgresql://localhost:54321/email
+        platform: ${SPRING_DATASOURCE_PLATFORM}
+        url: jdbc:${SPRING_DATASOURCE_PLATFORM}://${SPRING_DATASOURCE_HOST}:${SPRING_DATASOURCE_PORT}/email
         hikari:
           maximum-pool-size: 4
-        username: admin
-        password: admin
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         hibernate:
             ddl-auto: update
         properties:
             hibernate:
-                default_schema: public
+                default_schema: ${SPRING_JPA_DEFAULT_SCHEMA}
         generate-ddl: true
         show-sql: true
     thymeleaf:
